@@ -11,6 +11,16 @@ into structured reminders, interpret date/time information, support reschedule/s
 request clarification when mandatory information is missing. A language model interprets the text,
 so wording varies between runs; the specification must make that behaviour testable."
 
+## Clarifications
+
+### Session 2026-11-22
+
+Answers below are the recommended options proposed during `/speckit-clarify`; the student delegated
+the choice to the coding agent ("do every step on my behalf"), so each was accepted as recommended.
+
+- Q: When the user gives a time but no date ("at 8am"), should the agent pick the next occurrence or ask which day? → A: Next occurrence — today if that time is still ahead of `now`, otherwise tomorrow.
+- Q: Are recurring reminders ("every day at 9") in scope for v1, and with which values? → A: Yes, as a field only: `recurrence` ∈ `none | daily | weekly | weekdays | monthly`; `due_at` is the first future occurrence; the agent does not expand occurrences.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create a reminder from free text (Priority: P1)
@@ -92,7 +102,7 @@ and lists what is missing, instead of inventing a value.
 
 ### Edge Cases
 
-- Time with no date ("at 8am"): see FR-007.
+- Time with no date ("at 8am") after that time has passed today → tomorrow (FR-007).
 - Relative day names across week boundaries ("next Monday" on a Monday).
 - 12:00 am / 12:00 pm, "noon", "midnight".
 - Reminder text in mixed case or with emoji.
@@ -119,10 +129,11 @@ and lists what is missing, instead of inventing a value.
   `snooze_minutes` (computed by application code).
 - **FR-006**: When the task, time or target is missing or ambiguous, the agent MUST return `clarify`
   with the missing items and a question.
-- **FR-007**: A time with no date [NEEDS CLARIFICATION: should "at 8am" mean the next occurrence of
-  8am (today if still ahead, else tomorrow), or should the agent ask which day?].
-- **FR-008**: Recurring requests [NEEDS CLARIFICATION: are recurring reminders ("every day at 9")
-  in scope for v1, and if so which recurrence values?].
+- **FR-007**: A time with no date ("at 8am") MUST resolve to its next occurrence: today if that time
+  is still after `now`, otherwise tomorrow.
+- **FR-008**: Recurring requests MUST set `recurrence` to one of `daily | weekly | weekdays |
+  monthly` and `due_at` to the first future occurrence; non-recurring `create` responses use `none`.
+  Occurrence expansion is out of scope.
 - **FR-009**: The agent MUST apply guardrails GR-1…GR-6.
 - **FR-010**: The application MUST distinguish model/service failures (raise a service error) from
   agent responses; it MUST NOT fabricate a response when the model is unavailable.
@@ -132,8 +143,8 @@ and lists what is missing, instead of inventing a value.
 - **SCH-1**: The response is a JSON object with exactly these keys (no extras, none missing):
   `intent, task, due_at, recurrence, target_id, snooze_minutes, missing, question, reason`.
 - **SCH-2**: Types — `intent`: enum of FR-003; `task`: string 1–120 chars or null; `due_at`: string
-  matching `YYYY-MM-DDTHH:MM:SS±HH:MM` or null; `recurrence`: enum (see FR-008) or null;
-  `target_id`: string or null; `snooze_minutes`: integer 1–1440 or null; `missing`: array of unique
+  matching `YYYY-MM-DDTHH:MM:SS±HH:MM` or null; `recurrence`: one of `none | daily | weekly | weekdays | monthly` (non-null only for `create`) or
+  null; `target_id`: string or null; `snooze_minutes`: integer 1–1440 or null; `missing`: array of unique
   values from `task | time | target`; `question`: string 1–200 chars or null; `reason`: string
   1–200 chars or null.
 - **SCH-3**: Values are stable across runs for the same meaning: enumerations and timestamps are

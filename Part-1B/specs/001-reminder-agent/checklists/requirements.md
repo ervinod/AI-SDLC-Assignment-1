@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain — 2 open (FR-007 time-without-date, FR-008
+- [x] No [NEEDS CLARIFICATION] markers remain — 2 open (FR-007 time-without-date, FR-008
       recurrence scope); resolved by `/speckit-clarify`
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
