@@ -30,34 +30,34 @@ implements `src/` and `prompts/` only.
 ## Phase 2: Foundational
 
 - [ ] T007 [P] Write offline tests for request validation and GR-1 (data-model.md › Request.text, Request.now, Request.timezone, Request.reminders) in `tests/test_request.py`
-- [ ] T008 Create `RequestError`, `ServiceError` in `src/remindme/errors.py`
-- [ ] T009 Implement request parsing/validation and GR-1 precheck (data-model.md › Request.text, Request.now, Request.timezone, Request.reminders, ExistingReminder.id, ExistingReminder.due_at) in `src/remindme/request.py`
-- [ ] T010 Implement response construction and SCH validation (data-model.md › Response.intent … Response.reason) in `src/remindme/response.py`
+- [x] T008 Create `RequestError`, `ServiceError` in `src/remindme/errors.py`
+- [x] T009 Implement request parsing/validation and GR-1 precheck (data-model.md › Request.text, Request.now, Request.timezone, Request.reminders, ExistingReminder.id, ExistingReminder.due_at) in `src/remindme/request.py`
+- [x] T010 Implement response construction and SCH validation (data-model.md › Response.intent … Response.reason) in `src/remindme/response.py`
 
 ---
 
 ## Phase 3: User Story 1 – Create (P1) 🎯 MVP
 
 - [ ] T011 [P] [US1] Write offline tests for R-1…R-7 time resolution, recurrence and create invariants using a fake extractor in `tests/test_create.py`
-- [ ] T012 [US1] Implement R-1…R-7, R-10, R-11 (data-model.md › Response.due_at, Response.recurrence, Response.task) in `src/remindme/postprocess.py`
-- [ ] T013 [US1] Implement `handle()` orchestration in `src/remindme/agent.py`
-- [ ] T014 [US1] Write versioned system prompt with canary in `prompts/system_prompt.md` and implement `AnthropicExtractor` (model config per plan, structured output with contracts/extraction.schema.json, error mapping per research R6) in `src/remindme/llm.py`
-- [ ] T015 [US1] Implement CLI in `src/remindme/cli.py` and `src/remindme/__main__.py`
+- [x] T012 [US1] Implement R-1…R-7, R-10, R-11 (data-model.md › Response.due_at, Response.recurrence, Response.task) in `src/remindme/postprocess.py`
+- [x] T013 [US1] Implement `handle()` orchestration in `src/remindme/agent.py`
+- [x] T014 [US1] Write versioned system prompt with canary in `prompts/system_prompt.md` and implement `AnthropicExtractor` (model config per plan, structured output with contracts/extraction.schema.json, error mapping per research R6) in `src/remindme/llm.py`
+- [x] T015 [US1] Implement CLI in `src/remindme/cli.py` and `src/remindme/__main__.py`
 
 ## Phase 4: User Story 2 – Reschedule / snooze / cancel (P1)
 
 - [ ] T016 [P] [US2] Write offline tests for R-9, INV-2…INV-4, INV-9 in `tests/test_modify.py`
-- [ ] T017 [US2] Implement reschedule/snooze/cancel handling and target validation (data-model.md › Response.target_id, Response.snooze_minutes) in `src/remindme/postprocess.py`
+- [x] T017 [US2] Implement reschedule/snooze/cancel handling and target validation (data-model.md › Response.target_id, Response.snooze_minutes) in `src/remindme/postprocess.py`
 
 ## Phase 5: User Story 3 – Clarify (P1)
 
 - [ ] T018 [P] [US3] Write offline tests for GR-4…GR-6 and INV-5 in `tests/test_clarify_safety.py`
-- [ ] T019 [US3] Implement clarify conversions and R-8 safe fallbacks (data-model.md › Response.missing, Response.question) in `src/remindme/postprocess.py`
+- [x] T019 [US3] Implement clarify conversions and R-8 safe fallbacks (data-model.md › Response.missing, Response.question) in `src/remindme/postprocess.py`
 
 ## Phase 6: User Story 4 – Safety (P2)
 
 - [ ] T020 [P] [US4] Extend `tests/test_clarify_safety.py` with GR-1, INV-6, INV-10 and ServiceError propagation tests
-- [ ] T021 [US4] Implement reject handling and canary detection (data-model.md › Response.reason) in `src/remindme/postprocess.py`
+- [x] T021 [US4] Implement reject handling and canary detection (data-model.md › Response.reason) in `src/remindme/postprocess.py`
 
 ## Phase 7: Evaluation, repair, review
 
