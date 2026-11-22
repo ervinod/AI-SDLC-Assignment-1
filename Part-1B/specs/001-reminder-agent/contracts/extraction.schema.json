@@ -1,0 +1,28 @@
+{
+  "$comment": "Extraction = the ONLY thing the model produces (structured output). Final responses are built by deterministic code. Passed verbatim as output_config.format.schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["intent", "task", "time_spec", "recurrence", "target_id", "snooze_minutes", "missing", "question", "reason"],
+  "properties": {
+    "intent": {"type": "string", "enum": ["create", "reschedule", "snooze", "cancel", "clarify", "reject"]},
+    "task": {"type": ["string", "null"], "description": "Concise action to be reminded of, without scheduling words. null unless intent=create."},
+    "time_spec": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["offset_minutes", "day_offset", "weekday", "date", "time"],
+      "properties": {
+        "offset_minutes": {"type": ["integer", "null"], "description": "Relative offset from now, e.g. 'in 45 minutes' -> 45."},
+        "day_offset": {"type": ["integer", "null"], "description": "0 = today, 1 = tomorrow, 2 = day after tomorrow."},
+        "weekday": {"type": ["string", "null"], "enum": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", null]},
+        "date": {"type": ["string", "null"], "description": "Explicit calendar date YYYY-MM-DD when the user named one."},
+        "time": {"type": ["string", "null"], "description": "24-hour local clock time HH:MM."}
+      }
+    },
+    "recurrence": {"type": ["string", "null"], "enum": ["none", "daily", "weekly", "weekdays", "monthly", null]},
+    "target_id": {"type": ["string", "null"]},
+    "snooze_minutes": {"type": ["integer", "null"]},
+    "missing": {"type": "array", "items": {"type": "string", "enum": ["task", "time", "target"]}},
+    "question": {"type": ["string", "null"]},
+    "reason": {"type": ["string", "null"]}
+  }
+}
