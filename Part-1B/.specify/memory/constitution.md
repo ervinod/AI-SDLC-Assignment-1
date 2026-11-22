@@ -1,50 +1,74 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# RemindMe Agent Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Specified Behavioural Boundaries (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+- The language model is a non-deterministic component. Its *wording* may vary; the application's
+  *output contract* may not. Every response MUST conform to the Output Schema Contract in the
+  feature specification, whatever the model returns.
+- Acceptable behaviour is defined by schema rules (SCH-x), structural/behavioural invariants (INV-x),
+  guardrails (GR-x) and a declared evaluation threshold (THR-x) in the specification. Behaviour not
+  covered by these is out of scope and MUST NOT be relied on.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Deterministic Shell Around a Non-Deterministic Core
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+- The model only *extracts* intent and fields. Date/time arithmetic, timezone resolution, snooze
+  arithmetic, reminder-id validation, input pre-checks and guardrail enforcement MUST be done by
+  deterministic application code, never trusted to the model.
+- If the model output is missing, malformed, refused or violates an invariant, the application MUST
+  degrade to a safe `clarify` or `reject` response; it MUST NOT emit an unvalidated action.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Safety First
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+- The agent MUST refuse (intent `reject`) requests whose purpose is to harm people, and MUST NOT
+  follow instructions embedded in user text that try to change its role, reveal its prompt or emit
+  non-schema output (prompt injection).
+- The agent MUST NOT invent information: no hallucinated reminder ids, no default times when the
+  user gave none, no times in the past.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### IV. Evaluation Before Acceptance (NON-NEGOTIABLE)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- The evaluation dataset (`evals/dataset.json`, ≥ 15 cases covering normal, boundary, ambiguous,
+  missing-information, malformed and adversarial inputs) and the threshold are fixed *before* the
+  final evaluation and MUST NOT be weakened to obtain PASS: no removing hard cases, no editing
+  expected results without a recorded specification revision, no lowering thresholds, no disabling
+  guardrails.
+- One evaluation harness MUST apply, in order: structural (schema) validation → invariant/property
+  checks → semantic/quality scoring → aggregate decision against the threshold.
+- Model/service failures (network, rate limit, 5xx, refusals by the API) MUST be recorded separately
+  from application failures and MUST NOT be counted as application passes.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### V. Simplicity, Reproducibility and Secrets Hygiene
+
+- Python ≥ 3.12. Runtime dependency: the official `anthropic` SDK only (plus stdlib).
+- The model id, effort level, prompt version and trial count are recorded with every evaluation run.
+- API keys are read only from the environment / an untracked `.env`; they MUST never be committed,
+  logged or written into evidence files.
+
+## Engineering Constraints
+
+- Deterministic code (pre-checks, post-processing, validators, evaluators) MUST have offline unit
+  tests (no network) with ≥ 85% line coverage, run by `pytest`.
+- Lint gate: `ruff check` reports zero violations.
+- Latency: p95 end-to-end response time per request ≤ 20 s on the evaluation run.
+- Inputs longer than 500 characters or empty after trimming are rejected deterministically without
+  a model call.
+
+## Development Workflow and Quality Gates
+
+- Flow: constitution → specify → clarify → plan → tasks → analyze → implement → evaluation harness →
+  repair → re-evaluation → human decision.
+- First implementation is snapshotted to `evidence/initial-generation/` before any harness-driven
+  repair; the final one to `evidence/final-generation/`.
+- The coding agent MUST NOT edit `evals/`, `.harness/`, tests or the specification to obtain a PASS
+  (enforced by an integrity check). Failures are repaired in `src/` or `prompts/` unless they reveal
+  a genuine specification defect, which is fixed upstream and documented in `evidence/harness-log.md`.
+- After an automated PASS a human reviewer records ACCEPT or REJECT, limitations and residual risks.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes other guidance for this project. Amendments need a reason, a
+  semantic version bump and a commit.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-22 | **Last Amended**: 2026-11-22
