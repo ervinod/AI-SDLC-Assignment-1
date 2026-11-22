@@ -6,7 +6,7 @@ validate request → GR-1 precheck → extractor (model) → post-process → va
 from collections.abc import Callable
 
 from remindme.errors import RequestError, ServiceError
-from remindme.llm import AnthropicExtractor
+from remindme.llm import default_extractor
 from remindme.postprocess import fallback, postprocess
 from remindme.request import parse_request, precheck_text
 from remindme.response import reject, validate_response
@@ -36,7 +36,7 @@ def handle(request: dict, extractor: Extractor | None = None) -> dict:
     reason = precheck_text(parsed.text)
     if reason is not None:
         return reject(reason)
-    extraction = _extract(extractor or AnthropicExtractor(), request)
+    extraction = _extract(extractor or default_extractor(), request)
     try:
         response = postprocess(extraction, parsed)
     except (TypeError, ValueError, KeyError, AttributeError, ArithmeticError):

@@ -88,3 +88,20 @@ def run(extraction, request=None):
 @pytest.fixture
 def fake():
     return FakeExtractor
+
+
+PROVIDER_ENV = (
+    "REMINDME_PROVIDER",
+    "REMINDME_MODEL",
+    "REMINDME_EFFORT",
+    "REMINDME_OLLAMA_MODEL",
+    "OLLAMA_HOST",
+    "ANTHROPIC_API_KEY",
+)
+
+
+@pytest.fixture(autouse=True)
+def _isolated_provider_env(monkeypatch):
+    """Tests must not depend on the caller's environment (found by harness run-003)."""
+    for name in PROVIDER_ENV:
+        monkeypatch.delenv(name, raising=False)

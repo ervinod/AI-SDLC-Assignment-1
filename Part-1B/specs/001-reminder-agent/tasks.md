@@ -79,8 +79,10 @@ unchanged.
 ## Phase 9: FR-011 local provider (spec revision 2026-11-22)
 
 - [x] T028 [P] Write offline tests for provider selection and `OllamaExtractor` (stubbed `urllib.request.urlopen`: request body, success, `done_reason` length, connection/HTTP/timeout errors, invalid body, unparsable content → clarify) in `tests/test_ollama.py`
-- [ ] T029 Implement `default_extractor()`, `OllamaExtractor` and use it from `handle()` per plan.md › Amendment in `src/remindme/llm.py` and `src/remindme/agent.py`
+- [x] T029 Implement `default_extractor()`, `OllamaExtractor` and use it from `handle()` per plan.md › Amendment in `src/remindme/llm.py` and `src/remindme/agent.py`
 - [x] T030 Record provider/model in evaluation metadata in `.harness/run_eval.py`
+
+- [x] T031 Isolate tests from provider environment variables (autouse fixture in `tests/conftest.py`); found by harness run-003, where `REMINDME_PROVIDER=ollama` leaked into 7 Anthropic-path tests
 
 ## Dependencies
 

@@ -1,0 +1,721 @@
+{
+  "meta": {
+    "mode": "live",
+    "label": "after FR-011 (T029) - Ollama not installed yet",
+    "started_utc": "2026-11-22T18:29:53Z",
+    "provider": "ollama",
+    "model": "llama3.2:3b",
+    "effort": null,
+    "ollama_host": null,
+    "prompt_version_line": "PROMPT_VERSION: 1",
+    "k_trials": 3,
+    "dataset_sha256": "c1b4098f0d54297f9ee5a22c0e40455f1d9ddd7971d163bf8bd2469d14d52396",
+    "python": "3.13.7",
+    "anthropic_sdk": "2.12.0",
+    "api_key_present": false
+  },
+  "trials": [
+    {
+      "case_id": "C01",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.016,
+      "model_called": true
+    },
+    {
+      "case_id": "C01",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C01",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C18",
+      "trial": 1,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C18",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C18",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 1,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C20",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C20",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C20",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 1,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 2,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 3,
+      "status": "service_error",
+      "output": null,
+      "error": "ServiceError: could not connect to the Ollama server",
+      "latency_s": 0.0,
+      "model_called": true
+    }
+  ]
+}

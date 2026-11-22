@@ -1,4 +1,7 @@
-"""AnthropicExtractor: one structured-output Messages API call returning an Extraction.
+"""Extractors: one structured-output model call returning an Extraction.
+
+``AnthropicExtractor`` uses the Anthropic Messages API; ``OllamaExtractor`` uses a local Ollama
+server (FR-011). ``default_extractor()`` selects one from ``REMINDME_PROVIDER``.
 
 Model/service failures are mapped to ServiceError (research R6). A reply that is not valid JSON
 is returned as a raw string so that ``handle`` converts it to a safe clarify (R-8).
@@ -6,6 +9,8 @@ is returned as a raw string so that ``handle`` converts it to a safe clarify (R-
 
 import json
 import os
+import urllib.error
+import urllib.request
 from datetime import datetime
 from functools import cache
 from pathlib import Path
@@ -24,6 +29,10 @@ MAX_TOKENS = 2048
 FAILED_STOP_REASONS = ("refusal", "max_tokens")
 _STRIPPED_KEYS = ("$comment", "description")
 _DELIMITERS = ("user_request", "existing_reminders")
+DEFAULT_OLLAMA_HOST = "http://127.0.0.1:11434"
+DEFAULT_OLLAMA_MODEL = "llama3.2:3b"
+OLLAMA_TIMEOUT = 120
+_ALLOWED_SCHEMES = ("http://", "https://")
 
 
 @cache
@@ -152,3 +161,82 @@ class AnthropicExtractor:
                 raise
             raise ServiceError("no Anthropic credentials configured") from exc
         return parse_message(message)
+
+
+def parse_ollama_body(raw: bytes) -> object:
+    """Extract the Extraction from an Ollama ``/api/chat`` body (ServiceError when unusable)."""
+    try:
+        body = json.loads(raw)
+    except (TypeError, ValueError) as exc:
+        raise ServiceError("unparsable response body from Ollama") from exc
+    if not isinstance(body, dict):
+        raise ServiceError("unexpected response body from Ollama")
+    if body.get("done_reason") == "length":
+        raise ServiceError("model stopped with done_reason='length'")
+    message = body.get("message")
+    content = message.get("content") if isinstance(message, dict) else None
+    if not isinstance(content, str):
+        raise ServiceError("Ollama response has no message.content")
+    try:
+        return json.loads(content)
+    except ValueError:
+        return content
+
+
+class OllamaExtractor:
+    """Callable ``extractor(request) -> Extraction`` backed by a local Ollama server (FR-011).
+
+    Construction makes no network call; each call POSTs one non-streaming ``/api/chat`` request.
+    """
+
+    def __init__(self, host: str | None = None, model: str | None = None) -> None:
+        host = host or os.environ.get("OLLAMA_HOST") or DEFAULT_OLLAMA_HOST
+        self.host = host.rstrip("/")
+        self.model = model or os.environ.get("REMINDME_OLLAMA_MODEL") or DEFAULT_OLLAMA_MODEL
+
+    def _url(self) -> str:
+        if not self.host.lower().startswith(_ALLOWED_SCHEMES):
+            raise ServiceError("OLLAMA_HOST must be an http(s) URL")
+        return f"{self.host}/api/chat"
+
+    def build_body(self, request: dict) -> dict:
+        """The JSON body for ``/api/chat`` (same prompt, user message and schema as Anthropic)."""
+        parsed = parse_request(request)
+        return {
+            "model": self.model,
+            "stream": False,
+            "format": extraction_schema(),
+            "messages": [
+                {"role": "system", "content": load_system_prompt()},
+                {"role": "user", "content": build_user_message(parsed)},
+            ],
+        }
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+            raw = reply.read()
+        except urllib.error.HTTPError as exc:
+            raise ServiceError(f"Ollama HTTP error ({exc.code})") from exc
+        except urllib.error.URLError as exc:
+            raise ServiceError("could not connect to the Ollama server") from exc
+        except (TimeoutError, ConnectionError, OSError) as exc:
+            raise ServiceError(f"Ollama request failed: {type(exc).__name__}") from exc
+        return parse_ollama_body(raw)
+
+
+def default_extractor() -> AnthropicExtractor | OllamaExtractor:
+    """Select the extractor from ``REMINDME_PROVIDER`` (unset/anthropic or ollama; FR-011)."""
+    provider = (os.environ.get("REMINDME_PROVIDER") or "anthropic").strip().lower()
+    if provider == "anthropic":
+        return AnthropicExtractor()
+    if provider == "ollama":
+        return OllamaExtractor()
+    raise ServiceError(f"unknown REMINDME_PROVIDER: {provider!r}")

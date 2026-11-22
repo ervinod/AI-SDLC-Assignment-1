@@ -1,0 +1,1005 @@
+.............................................FF......FFFF...F........... [ 69%]
+................................                                         [100%]
+=================================== FAILURES ===================================
+______________________ test_default_extractor_end_to_end _______________________
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e48b0e0>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+>               h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1319: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1338: in request
+    self._send_request(method, url, body, headers, encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1384: in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1333: in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1093: in _send_output
+    self.send(msg)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1037: in send
+    self.connect()
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1003: in connect
+    self.sock = self._create_connection(
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:864: in create_connection
+    raise exceptions[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('127.0.0.1', 11434), timeout = 120, source_address = None
+all_errors = False
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None, *, all_errors=False):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default. When a connection
+        cannot be created, raises the last error if *all_errors* is False,
+        and an ExceptionGroup of all errors if *all_errors* is True.
+        """
+    
+        host, port = address
+        exceptions = []
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 61] Connection refused
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:849: ConnectionRefusedError
+
+During handling of the above exception, another exception occurred:
+
+self = <remindme.llm.OllamaExtractor object at 0x10e48af90>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'rem...', 'due_at': '2026-11-25T11:00:00+05:30'}, {'id': 'r3', 'task': 'Gym session', 'due_at': '2026-11-23T18:00:00+05:30'}]}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+>           reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/remindme/llm.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:489: in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:506: in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1348: in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e48b0e0>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+                h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+            except OSError as err: # timeout error
+>               raise URLError(err)
+E               urllib.error.URLError: <urlopen error [Errno 61] Connection refused>
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1322: URLError
+
+The above exception was the direct cause of the following exception:
+
+client = <function client.<locals>.install at 0x10d08f600>
+
+    def test_default_extractor_end_to_end(client):
+        c = client(message(json.dumps(GOOD)))
+>       out = handle(req("remind me to call mom tomorrow at 6pm", reminders=REMINDERS))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_extractor_cli.py:70: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/remindme/agent.py:39: in handle
+    extraction = _extract(extractor or default_extractor(), request)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/remindme/agent.py:22: in _extract
+    return extractor(request)
+           ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <remindme.llm.OllamaExtractor object at 0x10e48af90>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'rem...', 'due_at': '2026-11-25T11:00:00+05:30'}, {'id': 'r3', 'task': 'Gym session', 'due_at': '2026-11-23T18:00:00+05:30'}]}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+            raw = reply.read()
+        except urllib.error.HTTPError as exc:
+            raise ServiceError(f"Ollama HTTP error ({exc.code})") from exc
+        except urllib.error.URLError as exc:
+>           raise ServiceError("could not connect to the Ollama server") from exc
+E           remindme.errors.ServiceError: could not connect to the Ollama server
+
+src/remindme/llm.py:229: ServiceError
+_____________________ test_model_and_effort_env_overrides ______________________
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e427890>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+>               h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1319: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1338: in request
+    self._send_request(method, url, body, headers, encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1384: in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1333: in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1093: in _send_output
+    self.send(msg)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1037: in send
+    self.connect()
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1003: in connect
+    self.sock = self._create_connection(
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:864: in create_connection
+    raise exceptions[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('127.0.0.1', 11434), timeout = 120, source_address = None
+all_errors = False
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None, *, all_errors=False):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default. When a connection
+        cannot be created, raises the last error if *all_errors* is False,
+        and an ExceptionGroup of all errors if *all_errors* is True.
+        """
+    
+        host, port = address
+        exceptions = []
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 61] Connection refused
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:849: ConnectionRefusedError
+
+During handling of the above exception, another exception occurred:
+
+self = <remindme.llm.OllamaExtractor object at 0x10e427d90>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+>           reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/remindme/llm.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:489: in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:506: in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1348: in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e427890>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+                h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+            except OSError as err: # timeout error
+>               raise URLError(err)
+E               urllib.error.URLError: <urlopen error [Errno 61] Connection refused>
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1322: URLError
+
+The above exception was the direct cause of the following exception:
+
+client = <function client.<locals>.install at 0x10d22ec00>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10e4ceea0>
+
+    def test_model_and_effort_env_overrides(client, monkeypatch):
+        monkeypatch.setenv("REMINDME_MODEL", "claude-sonnet-5-5")
+        monkeypatch.setenv("REMINDME_EFFORT", "medium")
+        c = client(message(json.dumps(GOOD)))
+>       handle(req("remind me to call mom tomorrow at 6pm"))
+
+tests/test_extractor_cli.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/remindme/agent.py:39: in handle
+    extraction = _extract(extractor or default_extractor(), request)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/remindme/agent.py:22: in _extract
+    return extractor(request)
+           ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <remindme.llm.OllamaExtractor object at 0x10e427d90>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+            raw = reply.read()
+        except urllib.error.HTTPError as exc:
+            raise ServiceError(f"Ollama HTTP error ({exc.code})") from exc
+        except urllib.error.URLError as exc:
+>           raise ServiceError("could not connect to the Ollama server") from exc
+E           remindme.errors.ServiceError: could not connect to the Ollama server
+
+src/remindme/llm.py:229: ServiceError
+_____________ test_r8_unparsable_model_reply_becomes_clarify[raw0] _____________
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e533750>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+>               h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1319: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1338: in request
+    self._send_request(method, url, body, headers, encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1384: in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1333: in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1093: in _send_output
+    self.send(msg)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1037: in send
+    self.connect()
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1003: in connect
+    self.sock = self._create_connection(
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:864: in create_connection
+    raise exceptions[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('127.0.0.1', 11434), timeout = 120, source_address = None
+all_errors = False
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None, *, all_errors=False):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default. When a connection
+        cannot be created, raises the last error if *all_errors* is False,
+        and an ExceptionGroup of all errors if *all_errors* is True.
+        """
+    
+        host, port = address
+        exceptions = []
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 61] Connection refused
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:849: ConnectionRefusedError
+
+During handling of the above exception, another exception occurred:
+
+self = <remindme.llm.OllamaExtractor object at 0x10e533450>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+>           reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/remindme/llm.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:489: in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:506: in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1348: in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e533750>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+                h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+            except OSError as err: # timeout error
+>               raise URLError(err)
+E               urllib.error.URLError: <urlopen error [Errno 61] Connection refused>
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1322: URLError
+
+The above exception was the direct cause of the following exception:
+
+client = <function client.<locals>.install at 0x10e3efc40>
+raw = namespace(stop_reason='end_turn', content=[namespace(type='text', text='not json {')])
+
+    @pytest.mark.parametrize("raw", [message("not json {"), message(None)])
+    def test_r8_unparsable_model_reply_becomes_clarify(client, raw):
+        client(raw)
+>       out = handle(req("remind me to call mom tomorrow at 6pm"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_extractor_cli.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/remindme/agent.py:39: in handle
+    extraction = _extract(extractor or default_extractor(), request)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/remindme/agent.py:22: in _extract
+    return extractor(request)
+           ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <remindme.llm.OllamaExtractor object at 0x10e533450>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+            raw = reply.read()
+        except urllib.error.HTTPError as exc:
+            raise ServiceError(f"Ollama HTTP error ({exc.code})") from exc
+        except urllib.error.URLError as exc:
+>           raise ServiceError("could not connect to the Ollama server") from exc
+E           remindme.errors.ServiceError: could not connect to the Ollama server
+
+src/remindme/llm.py:229: ServiceError
+_____________ test_r8_unparsable_model_reply_becomes_clarify[raw1] _____________
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e60c350>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+>               h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1319: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1338: in request
+    self._send_request(method, url, body, headers, encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1384: in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1333: in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1093: in _send_output
+    self.send(msg)
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1037: in send
+    self.connect()
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/http/client.py:1003: in connect
+    self.sock = self._create_connection(
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:864: in create_connection
+    raise exceptions[0]
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+address = ('127.0.0.1', 11434), timeout = 120, source_address = None
+all_errors = False
+
+    def create_connection(address, timeout=_GLOBAL_DEFAULT_TIMEOUT,
+                          source_address=None, *, all_errors=False):
+        """Connect to *address* and return the socket object.
+    
+        Convenience function.  Connect to *address* (a 2-tuple ``(host,
+        port)``) and return the socket object.  Passing the optional
+        *timeout* parameter will set the timeout on the socket instance
+        before attempting to connect.  If no *timeout* is supplied, the
+        global default timeout setting returned by :func:`getdefaulttimeout`
+        is used.  If *source_address* is set it must be a tuple of (host, port)
+        for the socket to bind as a source address before making the connection.
+        A host of '' or port 0 tells the OS to use the default. When a connection
+        cannot be created, raises the last error if *all_errors* is False,
+        and an ExceptionGroup of all errors if *all_errors* is True.
+        """
+    
+        host, port = address
+        exceptions = []
+        for res in getaddrinfo(host, port, 0, SOCK_STREAM):
+            af, socktype, proto, canonname, sa = res
+            sock = None
+            try:
+                sock = socket(af, socktype, proto)
+                if timeout is not _GLOBAL_DEFAULT_TIMEOUT:
+                    sock.settimeout(timeout)
+                if source_address:
+                    sock.bind(source_address)
+>               sock.connect(sa)
+E               ConnectionRefusedError: [Errno 61] Connection refused
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/socket.py:849: ConnectionRefusedError
+
+During handling of the above exception, another exception occurred:
+
+self = <remindme.llm.OllamaExtractor object at 0x10e60c250>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+>           reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+src/remindme/llm.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:189: in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:489: in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:506: in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:466: in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1348: in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <urllib.request.HTTPHandler object at 0x10e48b4d0>
+http_class = <class 'http.client.HTTPConnection'>
+req = <urllib.request.Request object at 0x10e60c350>, http_conn_args = {}
+
+    def do_open(self, http_class, req, **http_conn_args):
+        """Return an HTTPResponse object for the request, using http_class.
+    
+        http_class must implement the HTTPConnection API from http.client.
+        """
+        host = req.host
+        if not host:
+            raise URLError('no host given')
+    
+        # will parse host:port
+        h = http_class(host, timeout=req.timeout, **http_conn_args)
+        h.set_debuglevel(self._debuglevel)
+    
+        headers = dict(req.unredirected_hdrs)
+        headers.update({k: v for k, v in req.headers.items()
+                        if k not in headers})
+    
+        # TODO(jhylton): Should this be redesigned to handle
+        # persistent connections?
+    
+        # We want to make an HTTP/1.1 request, but the addinfourl
+        # class isn't prepared to deal with a persistent connection.
+        # It will try to read all remaining data from the socket,
+        # which will block while the server waits for the next request.
+        # So make sure the connection gets closed after the (only)
+        # request.
+        headers["Connection"] = "close"
+        headers = {name.title(): val for name, val in headers.items()}
+    
+        if req._tunnel_host:
+            tunnel_headers = {}
+            proxy_auth_hdr = "Proxy-Authorization"
+            if proxy_auth_hdr in headers:
+                tunnel_headers[proxy_auth_hdr] = headers[proxy_auth_hdr]
+                # Proxy-Authorization should not be sent to origin
+                # server.
+                del headers[proxy_auth_hdr]
+            h.set_tunnel(req._tunnel_host, headers=tunnel_headers)
+    
+        try:
+            try:
+                h.request(req.get_method(), req.selector, req.data, headers,
+                          encode_chunked=req.has_header('Transfer-encoding'))
+            except OSError as err: # timeout error
+>               raise URLError(err)
+E               urllib.error.URLError: <urlopen error [Errno 61] Connection refused>
+
+/opt/homebrew/Cellar/python@3.13/3.13.7/Frameworks/Python.framework/Versions/3.13/lib/python3.13/urllib/request.py:1322: URLError
+
+The above exception was the direct cause of the following exception:
+
+client = <function client.<locals>.install at 0x113ae4180>
+raw = namespace(stop_reason='end_turn', content=[])
+
+    @pytest.mark.parametrize("raw", [message("not json {"), message(None)])
+    def test_r8_unparsable_model_reply_becomes_clarify(client, raw):
+        client(raw)
+>       out = handle(req("remind me to call mom tomorrow at 6pm"))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_extractor_cli.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/remindme/agent.py:39: in handle
+    extraction = _extract(extractor or default_extractor(), request)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/remindme/agent.py:22: in _extract
+    return extractor(request)
+           ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <remindme.llm.OllamaExtractor object at 0x10e60c250>
+request = {'text': 'remind me to call mom tomorrow at 6pm', 'now': '2026-11-23T09:00:00+05:30', 'timezone': 'Asia/Kolkata', 'reminders': []}
+
+    def __call__(self, request: dict) -> object:
+        data = json.dumps(self.build_body(request)).encode("utf-8")
+        req = urllib.request.Request(
+            self._url(),
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            reply = urllib.request.urlopen(req, timeout=OLLAMA_TIMEOUT)  # nosec B310 - scheme checked
+            raw = reply.read()
+        except urllib.error.HTTPError as exc:
+            raise ServiceError(f"Ollama HTTP error ({exc.code})") from exc
+        except urllib.error.URLError as exc:
+>           raise ServiceError("could not connect to the Ollama server") from exc
+E           remindme.errors.ServiceError: could not connect to the Ollama server
+
+src/remindme/llm.py:229: ServiceError
+_________________________ test_cli_success_prints_json _________________________
+
+client = <function client.<locals>.install at 0x113ae4cc0>
+capsys = <_pytest.capture.CaptureFixture object at 0x10e4e57f0>
+
+    def test_cli_success_prints_json(client, capsys):
+        client(message(json.dumps(GOOD)))
+        code = cli.main([*NOW, "remind me to call mom tomorrow at 6pm"])
+        out = capsys.readouterr().out
+>       assert code == 0
+E       assert 3 == 0
+
+tests/test_extractor_cli.py:136: AssertionError
+_________________________ test_cli_with_reminders_file _________________________
+
+client = <function client.<locals>.install at 0x113ae6020>
+capsys = <_pytest.capture.CaptureFixture object at 0x10e427b10>
+tmp_path = PosixPath('/private/var/folders/2d/lmj5f_714dx4t48d2c0vb3xh0000gn/T/pytest-of-apple/pytest-7/test_cli_with_reminders_file0')
+
+    def test_cli_with_reminders_file(client, capsys, tmp_path):
+        f = tmp_path / "rem.json"
+        f.write_text(json.dumps(REMINDERS))
+        client(message(json.dumps({**GOOD, "intent": "cancel", "target_id": "r3", "task": None})))
+>       assert cli.main([*NOW, "--reminders", str(f), "cancel the gym reminder"]) == 0
+E       AssertionError: assert 3 == 0
+E        +  where 3 = <function main at 0x10e3ed6c0>(['--now', '2026-11-23T09:00:00+05:30', '--tz', 'Asia/Kolkata', '--reminders', '/private/var/folders/2d/lmj5f_714dx4t48d2c0vb3xh0000gn/T/pytest-of-apple/pytest-7/test_cli_with_reminders_file0/rem.json', ...])
+E        +    where <function main at 0x10e3ed6c0> = cli.main
+
+tests/test_extractor_cli.py:144: AssertionError
+----------------------------- Captured stderr call -----------------------------
+remindme: model/service error: could not connect to the Ollama server
+_____________________________ test_cli_default_now _____________________________
+
+client = <function client.<locals>.install at 0x113ae6480>
+capsys = <_pytest.capture.CaptureFixture object at 0x10e52b9b0>
+
+    def test_cli_default_now(client, capsys):
+        client(message(json.dumps({**GOOD, "time_spec": {**GOOD["time_spec"], "day_offset": 1}})))
+>       assert cli.main(["--tz", "Asia/Kolkata", "remind me to call mom tomorrow at 6pm"]) == 0
+E       AssertionError: assert 3 == 0
+E        +  where 3 = <function main at 0x10e3ed6c0>(['--tz', 'Asia/Kolkata', 'remind me to call mom tomorrow at 6pm'])
+E        +    where <function main at 0x10e3ed6c0> = cli.main
+
+tests/test_extractor_cli.py:167: AssertionError
+----------------------------- Captured stderr call -----------------------------
+remindme: model/service error: could not connect to the Ollama server
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/remindme/__init__.py          1      0   100%
+src/remindme/__main__.py          2      2     0%   3-5
+src/remindme/agent.py            28      5    82%   25-26, 42-44, 46
+src/remindme/cli.py              38      4    89%   56-59
+src/remindme/errors.py            2      0   100%
+src/remindme/llm.py             143     38    73%   46-47, 107-117, 129-131, 134-136, 139-163, 173, 199, 239
+src/remindme/postprocess.py     178     17    90%   56-58, 161, 199, 223, 235, 240, 245, 260-261, 265-270
+src/remindme/request.py          80      6    92%   46, 52, 75, 88, 94, 98
+src/remindme/response.py        129     17    87%   61, 81, 125, 128, 133, 146, 153, 158, 160, 163, 170, 179, 181, 192, 194, 204, 208
+-----------------------------------------------------------
+TOTAL                           601     89    85%
+Required test coverage of 85% reached. Total coverage: 85.19%
+=========================== short test summary info ============================
+FAILED tests/test_extractor_cli.py::test_default_extractor_end_to_end - remin...
+FAILED tests/test_extractor_cli.py::test_model_and_effort_env_overrides - rem...
+FAILED tests/test_extractor_cli.py::test_r8_unparsable_model_reply_becomes_clarify[raw0]
+FAILED tests/test_extractor_cli.py::test_r8_unparsable_model_reply_becomes_clarify[raw1]
+FAILED tests/test_extractor_cli.py::test_cli_success_prints_json - assert 3 == 0
+FAILED tests/test_extractor_cli.py::test_cli_with_reminders_file - AssertionE...
+FAILED tests/test_extractor_cli.py::test_cli_default_now - AssertionError: as...
+7 failed, 97 passed in 0.69s
