@@ -1,0 +1,4 @@
+# Security/SAST gate configuration. The gate runs `bandit -r src -ll` (MEDIUM severity and above
+# fail the gate, constitution "Engineering Constraints"). No tests are skipped.
+skips: []
+exclude_dirs: ["tests", ".venv"]
