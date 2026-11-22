@@ -111,7 +111,9 @@ and compare stdout with the exact expected lines.
 - Non-integer or non-positive task id → exit 2; well-formed id that does not exist → exit 1.
 - `update` with no change options → exit 2 `error: nothing to update`.
 - Data file missing → treated as empty store (created on first write).
-- Data file not valid JSON or not matching the data-file schema → exit 3, file left untouched.
+- Data file not valid JSON or not matching the data-file schema (wrong version, missing/extra task
+  fields, wrong types or enum values, duplicate ids, an id ≥ `next_id`) → exit 3, file left untouched.
+- `TASKFLOW_NOW` set to a malformed timestamp → exit 2.
 - Any failing command leaves the data file byte-identical.
 
 ## Requirements *(mandatory)*
@@ -127,7 +129,8 @@ and compare stdout with the exact expected lines.
   ascending, accept only `^[a-z0-9-]{1,30}$`, and allow at most 10 tags per task.
 - **FR-004**: System MUST display a single task by id as JSON (2-space indent, keys sorted).
 - **FR-005**: System MUST update a task's title, priority, and tags (add and remove) with the
-  same validation as FR-001/FR-003, and set `updated_at` to the current time.
+  same validation as FR-001/FR-003, and set `updated_at` to the current time. Removing a tag the
+  task does not have is a no-op (the command still succeeds).
 - **FR-006**: System MUST delete a task by id.
 - **FR-007**: System MUST support statuses `todo`, `in_progress`, `done`, `cancelled` and permit only
   these transitions: `todo→in_progress`, `todo→cancelled`, `in_progress→todo`,
@@ -152,7 +155,8 @@ and compare stdout with the exact expected lines.
   (`done→todo`, `cancelled→todo`); every other transition out of these states is rejected per FR-007.
 - **FR-015**: Timestamps (`created_at`, `updated_at`) MUST be ISO-8601 UTC with second precision and
   a `Z` suffix, taken from the current time; if environment variable `TASKFLOW_NOW` is set to such a
-  timestamp the system MUST use it instead (deterministic clock for tests and demos).
+  timestamp the system MUST use it instead (deterministic clock for tests and demos). An invalid
+  `TASKFLOW_NOW` value MUST cause exit 2 with `error: invalid TASKFLOW_NOW`.
 - **FR-016**: Success messages MUST be exactly: `Created task <id>`, `Updated task <id>`,
   `Deleted task <id>`, `Task <id>: <from> -> <to>`.
 
