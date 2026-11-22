@@ -1,0 +1,7 @@
+[
+  {"id": "r1", "task": "Take medicine", "due_at": "2026-11-23T09:30:00+05:30"},
+  {"id": "r2", "task": "Dentist appointment", "due_at": "2026-11-25T11:00:00+05:30"},
+  {"id": "r3", "task": "Gym session", "due_at": "2026-11-23T18:00:00+05:30"},
+  {"id": "r4", "task": "Call the bank", "due_at": "2026-11-24T10:00:00+05:30"},
+  {"id": "r5", "task": "Call grandma", "due_at": "2026-11-26T19:00:00+05:30"}
+]
