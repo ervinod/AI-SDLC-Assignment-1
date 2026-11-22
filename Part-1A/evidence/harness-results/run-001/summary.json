@@ -1,0 +1,29 @@
+{
+  "run": "run-001",
+  "started_utc": "2026-11-22T17:49:34Z",
+  "label": "first harness run on initial generation",
+  "overall": "PASS",
+  "gates": [
+    {
+      "gate": "integrity",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "lint",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "security",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "tests",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "failed_tests": []
+}

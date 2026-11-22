@@ -1,0 +1,20 @@
+........................................................................ [ 70%]
+..............................                                           [100%]
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                         Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+src/taskflow/__init__.py         1      0   100%
+src/taskflow/__main__.py         4      4     0%   3-8
+src/taskflow/cli.py             95      2    98%   120, 123
+src/taskflow/clock.py           33      3    91%   21-22, 39
+src/taskflow/errors.py          26      0   100%
+src/taskflow/formatting.py      25      0   100%
+src/taskflow/models.py          69      4    94%   103-104, 110-111
+src/taskflow/service.py         96      2    98%   55, 169
+src/taskflow/store.py          100     15    85%   45, 66, 81, 83, 115-116, 136-138, 142-147
+----------------------------------------------------------
+TOTAL                          449     30    93%
+Required test coverage of 90% reached. Total coverage: 93.32%
+102 passed in 0.75s

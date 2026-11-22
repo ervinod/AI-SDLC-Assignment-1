@@ -1,0 +1,29 @@
+{
+  "run": "run-001",
+  "started_utc": "2026-11-22T17:50:10Z",
+  "label": "SELF-TEST mutant: shell_true",
+  "overall": "FAIL",
+  "gates": [
+    {
+      "gate": "integrity",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "lint",
+      "exit_code": 1,
+      "result": "FAIL"
+    },
+    {
+      "gate": "security",
+      "exit_code": 1,
+      "result": "FAIL"
+    },
+    {
+      "gate": "tests",
+      "exit_code": 0,
+      "result": "PASS"
+    }
+  ],
+  "failed_tests": []
+}

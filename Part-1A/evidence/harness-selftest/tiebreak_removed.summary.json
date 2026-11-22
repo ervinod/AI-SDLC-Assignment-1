@@ -1,0 +1,40 @@
+{
+  "run": "run-001",
+  "started_utc": "2026-11-22T17:50:07Z",
+  "label": "SELF-TEST mutant: tiebreak_removed",
+  "overall": "FAIL",
+  "gates": [
+    {
+      "gate": "integrity",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "lint",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "security",
+      "exit_code": 0,
+      "result": "PASS"
+    },
+    {
+      "gate": "tests",
+      "exit_code": 1,
+      "result": "FAIL"
+    }
+  ],
+  "failed_tests": [
+    {
+      "test": "tests.contract.test_cli_list::test_as3_2_priority_sort_with_tiebreakers",
+      "kind": "failure",
+      "message": "assert [2, 4, 5, 3, 1] == [4, 5, 2, 3, 1]\n  \n  At index 0 diff: 2 != 4\n  Use -v to get more diff"
+    },
+    {
+      "test": "tests.contract.test_cli_list::test_as3_5_json_output",
+      "kind": "failure",
+      "message": "assert [2, 4, 5, 3, 1] == [4, 5, 2, 3, 1]\n  \n  At index 0 diff: 2 != 4\n  Use -v to get more diff"
+    }
+  ]
+}
