@@ -28,6 +28,11 @@ RUNS = Path(os.environ.get("REMINDME_EVAL_RUNS_DIR", ROOT / "evidence" / "eval-r
 
 
 def _meta(k, label, mode):
+    provider = os.environ.get("REMINDME_PROVIDER", "anthropic")
+    if provider == "ollama":
+        model = os.environ.get("REMINDME_OLLAMA_MODEL", "llama3.2:3b")
+    else:
+        model = os.environ.get("REMINDME_MODEL", "claude-opus-5-5")
     prompt = ROOT / "prompts" / "system_prompt.md"
     first = prompt.read_text().splitlines()[0] if prompt.exists() else ""
     try:
@@ -40,23 +45,25 @@ def _meta(k, label, mode):
         "mode": mode,
         "label": label,
         "started_utc": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "model": os.environ.get("REMINDME_MODEL", "claude-opus-5-5"),
-        "effort": os.environ.get("REMINDME_EFFORT", "low"),
+        "provider": provider,
+        "model": model,
+        "effort": os.environ.get("REMINDME_EFFORT", "low") if provider == "anthropic" else None,
+        "ollama_host": os.environ.get("OLLAMA_HOST") if provider == "ollama" else None,
         "prompt_version_line": first,
         "k_trials": k,
         "dataset_sha256": hashlib.sha256(DATASET.read_bytes()).hexdigest(),
         "python": platform.python_version(),
         "anthropic_sdk": sdk,
-        "api_key_present": bool(os.environ.get("ANTHROPIC_API_KEY")),
+        "api_key_present": bool(os.environ.get("ANTHROPIC_API_KEY")),  # value never stored
     }
 
 
 def _run_trial(case, trial_no, handle, errors):
     """Execute one trial; never raises."""
     calls = {"n": 0}
-    from remindme.llm import AnthropicExtractor
+    from remindme.llm import default_extractor
 
-    real = AnthropicExtractor()
+    real = default_extractor()
 
     def counting(req):
         calls["n"] += 1

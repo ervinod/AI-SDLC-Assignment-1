@@ -100,6 +100,23 @@ sorted keys), exit 0. `--now` defaults to the current time in `--tz` (default `U
 - **R-11** the final response is validated against SCH in code before being returned; strings longer
   than the SCH limits are truncated on a word boundary (task 120, question/reason 200).
 
+## Amendment: local provider (FR-011)
+
+- `remindme.llm.default_extractor()` returns `OllamaExtractor()` when `REMINDME_PROVIDER=ollama`,
+  else `AnthropicExtractor()`; `handle()` uses it when no extractor is passed. Unknown provider
+  value → `ServiceError`.
+- `OllamaExtractor` (in `llm.py`): constructed lazily without any network call. On call, it POSTs to
+  `{OLLAMA_HOST or http://127.0.0.1:11434}/api/chat` using `urllib.request.urlopen` (called as a
+  module attribute so tests can stub it), timeout 120 s, body
+  `{"model": REMINDME_OLLAMA_MODEL or "llama3.2:3b", "stream": false, "format": <Extraction schema>,
+  "messages": [{"role": "system", ...same prompt...}, {"role": "user", ...same user message...}]}`.
+  No sampling options are set (default model randomness = the non-determinism under test).
+- Response: JSON body with `message.content` (string). `done_reason == "length"` → `ServiceError`
+  (like `max_tokens`). Content that is not valid JSON → returned raw (→ clarify, R-8).
+- `urllib.error.URLError`, `HTTPError`, `TimeoutError`, `ConnectionError`, an unparsable HTTP body
+  or a body without `message.content` → `ServiceError`.
+- The evaluation runner records `provider` and the effective model in run metadata.
+
 ## Source Layout
 
 ```text

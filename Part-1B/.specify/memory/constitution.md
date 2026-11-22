@@ -41,8 +41,11 @@
 
 ### V. Simplicity, Reproducibility and Secrets Hygiene
 
-- Python ≥ 3.12. Runtime dependency: the official `anthropic` SDK only (plus stdlib).
-- The model id, effort level, prompt version and trial count are recorded with every evaluation run.
+- Python ≥ 3.12. Runtime dependency: the official `anthropic` SDK only (plus stdlib). A local-model
+  provider (Ollama) MAY be used through the standard library HTTP client; it MUST honour the same
+  Extraction contract, evaluation dataset and thresholds.
+- The provider, model id, effort level, prompt version and trial count are recorded with every
+  evaluation run.
 - API keys are read only from the environment / an untracked `.env`; they MUST never be committed,
   logged or written into evidence files.
 
@@ -71,4 +74,7 @@
 - This constitution supersedes other guidance for this project. Amendments need a reason, a
   semantic version bump and a commit.
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-22 | **Last Amended**: 2026-11-22
+**Version**: 1.1.0 | **Ratified**: 2026-11-22 | **Last Amended**: 2026-11-22
+
+Amendment 1.1.0 (MINOR): allow a local-model provider so the evaluation can run without a hosted
+API key (the student has no Anthropic API key). Thresholds and guardrails unchanged.

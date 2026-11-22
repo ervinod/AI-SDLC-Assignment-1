@@ -76,6 +76,12 @@ unchanged.
 - [x] T026 [P] Write offline tests for the default extractor with a stubbed `anthropic.Anthropic` client: request shape (model, structured output, no sampling params, canary in system prompt, delimited user text), env overrides, R6 service-error mapping (stop reasons, connection, 401/429/5xx), unparsable reply → clarify, in `tests/test_extractor_cli.py`
 - [x] T027 [P] Write CLI tests (SCH-4 JSON stdout; exit 0/2/3; reminders file; default `--now`) in `tests/test_extractor_cli.py`
 
+## Phase 9: FR-011 local provider (spec revision 2026-11-22)
+
+- [x] T028 [P] Write offline tests for provider selection and `OllamaExtractor` (stubbed `urllib.request.urlopen`: request body, success, `done_reason` length, connection/HTTP/timeout errors, invalid body, unparsable content → clarify) in `tests/test_ollama.py`
+- [ ] T029 Implement `default_extractor()`, `OllamaExtractor` and use it from `handle()` per plan.md › Amendment in `src/remindme/llm.py` and `src/remindme/agent.py`
+- [x] T030 Record provider/model in evaluation metadata in `.harness/run_eval.py`
+
 ## Dependencies
 
 Setup (T001–T006) → Foundational (T007–T010) → US1 (T011–T015) → US2, US3, US4 (parallel) → T022–T025.

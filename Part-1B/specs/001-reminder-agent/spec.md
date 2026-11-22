@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-22
 
-**Status**: Draft
+**Status**: Draft (rev. 2026-11-22: FR-011 local provider added, see Revision History)
 
 **Input**: User description: "Natural-Language Reminder Agent: parse unstructured reminder requests
 into structured reminders, interpret date/time information, support reschedule/snooze intent and
@@ -137,6 +137,9 @@ and lists what is missing, instead of inventing a value.
 - **FR-009**: The agent MUST apply guardrails GR-1…GR-6.
 - **FR-010**: The application MUST distinguish model/service failures (raise a service error) from
   agent responses; it MUST NOT fabricate a response when the model is unavailable.
+- **FR-011**: The model provider MUST be selectable with `REMINDME_PROVIDER` = `anthropic` (default)
+  or `ollama` (local model). Both providers MUST return the same Extraction contract and are
+  evaluated against the same dataset and THR-1…THR-6.
 
 ### Output Schema Contract
 
@@ -221,4 +224,11 @@ and lists what is missing, instead of inventing a value.
 - Single user; reminders are stored by the caller (this feature only interprets requests).
 - English input. The week starts on Monday; "next <weekday>" means the first such day strictly
   after today.
-- The model is accessed through the Anthropic API; an API key is supplied via the environment.
+- The model is accessed through the Anthropic API with an API key from the environment, or through a
+  locally running Ollama server (no key). The provider and model are recorded with every evaluation.
+
+## Revision History
+
+- 2026-11-22 — FR-011 added (constitution 1.1.0). Reason: the live evaluation could not run because
+  no Anthropic API key is available (harness runs 001–002 INCONCLUSIVE, THR-6). The dataset,
+  expected results, invariants, guardrails and thresholds are unchanged.
