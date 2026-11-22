@@ -66,6 +66,16 @@ implements `src/` and `prompts/` only.
 - [ ] T024 Snapshot `evidence/final-generation/`, write `evidence/eval-results.json` and `evidence/harness-log.md`
 - [ ] T025 Human review: ACCEPT/REJECT, limitations, residual risks
 
+## Phase 8: Tasks added after harness run-001 (coverage gap, see evidence/harness-log.md)
+
+Harness run-001 failed the unit-test gate: coverage was 74.18% against the required 85%
+(constitution "Engineering Constraints"). `cli.py` and `llm.py` were not covered because the
+original task list had no test task for them. These two tasks were added. Test-only, threshold
+unchanged.
+
+- [x] T026 [P] Write offline tests for the default extractor with a stubbed `anthropic.Anthropic` client: request shape (model, structured output, no sampling params, canary in system prompt, delimited user text), env overrides, R6 service-error mapping (stop reasons, connection, 401/429/5xx), unparsable reply → clarify, in `tests/test_extractor_cli.py`
+- [x] T027 [P] Write CLI tests (SCH-4 JSON stdout; exit 0/2/3; reminders file; default `--now`) in `tests/test_extractor_cli.py`
+
 ## Dependencies
 
 Setup (T001–T006) → Foundational (T007–T010) → US1 (T011–T015) → US2, US3, US4 (parallel) → T022–T025.
