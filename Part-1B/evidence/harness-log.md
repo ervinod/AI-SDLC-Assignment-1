@@ -4,7 +4,8 @@
 
 | Item | Value |
 |------|-------|
-| Model | `claude-opus-5-5` (env `REMINDME_MODEL`) |
+| Provider | `anthropic` (default) or `ollama` (local, FR-011) — recorded per run in `eval-results.json` › meta |
+| Model | `claude-opus-5-5` (env `REMINDME_MODEL`) or local `llama3.2:3b` (env `REMINDME_OLLAMA_MODEL`) |
 | Effort | `low` (env `REMINDME_EFFORT`) |
 | Output control | Messages API structured output, `output_config.format` = `contracts/extraction.schema.json` |
 | max_tokens | 2048; no sampling parameters |
@@ -66,10 +67,45 @@ dataset were **not** changed, and no `src/` change was needed.
 THR-6 correctly prevented a PASS: the service errors were reported and **not** counted as
 application results.
 
-### run-003+ — live evaluation with API key — *pending*
+### Spec revision — FR-011 local provider (constitution 1.1.0)
 
-To be run after `ANTHROPIC_API_KEY` is placed in `.env`:
-`.harness/run_harness.sh --label "live evaluation"`. Results and any repair cycle are recorded here.
+No Anthropic API key is available to the student, so a local-model provider (Ollama, no key) was
+added through the SDD flow: constitution amendment, spec FR-011 with a Revision History entry,
+a plan Amendment section, tasks T028–T030, offline tests `tests/test_ollama.py` (red before
+implementation), and a re-lock. The coding agent then implemented T029. The dataset, expected
+results and thresholds were **not** changed.
+
+### run-003 — 2026-11-22 — after T029, `REMINDME_PROVIDER=ollama` — **FAIL**
+
+| Gate | Result | Evidence |
+|------|--------|----------|
+| integrity | PASS | 29 files |
+| lint | PASS | |
+| unit_tests | **FAIL** | 97 passed, **7 failed** (all in `tests/test_extractor_cli.py`) |
+| evaluation | INCONCLUSIVE | 66/72 `service_error: could not connect to the Ollama server` (Ollama not installed yet) |
+
+**Failure analysis.** The 7 failing tests cover the Anthropic path and assume the default
+provider. The harness ran with `REMINDME_PROVIDER=ollama` exported, and the tests inherited it,
+so `handle()` chose the Ollama extractor. With the variable unset, all 104 tests pass. The
+defect is in the tests (they depend on the caller's environment), not in `src/`.
+
+**Repair.** T031 adds an autouse fixture in `tests/conftest.py` that clears all provider-related
+variables before every test. This makes the tests deterministic and removes no assertions.
+Re-locked.
+
+### run-004 — 2026-11-22 — after T031, same environment — integrity/lint/unit tests **PASS**, evaluation INCONCLUSIVE
+
+| Gate | Result | Evidence |
+|------|--------|----------|
+| integrity | PASS | |
+| lint | PASS | |
+| unit_tests | PASS | 104 passed; coverage 91% |
+| evaluation | INCONCLUSIVE | Ollama server not running (local model not downloaded yet) |
+
+### run-005+ — live evaluation with local model — *pending*
+
+Requires `brew install ollama`, `ollama serve`, `ollama pull llama3.2:3b`, then
+`REMINDME_PROVIDER=ollama .harness/run_harness.sh --label "live evaluation"`.
 
 ## 5. Human review
 
