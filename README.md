@@ -56,7 +56,17 @@ export TASKFLOW_DATA=/tmp/demo.json
 
 ## Run the Part 1B harness
 
-Part 1B calls the Anthropic API. Use your own key and never commit it:
+Part 1B can use either a free local model or the Anthropic API (spec FR-011).
+
+Option 1: local model, no key needed.
+
+```bash
+brew install ollama && ollama serve        # keep ollama serve running in its own terminal
+ollama pull llama3.2:3b
+cd Part-1B && REMINDME_PROVIDER=ollama .harness/run_harness.sh --label "local model run"
+```
+
+Option 2: Anthropic API. Use your own key and never commit it:
 
 ```bash
 cd Part-1B
