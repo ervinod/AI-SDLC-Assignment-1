@@ -1,0 +1,20 @@
+........................................................................ [ 78%]
+....................                                                     [100%]
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/remindme/__init__.py          1      0   100%
+src/remindme/__main__.py          2      2     0%   3-5
+src/remindme/agent.py            28      5    82%   25-26, 42-44, 46
+src/remindme/cli.py              38      0   100%
+src/remindme/errors.py            2      0   100%
+src/remindme/llm.py              88      8    91%   37-38, 148-153
+src/remindme/postprocess.py     178     17    90%   56-58, 161, 199, 223, 235, 240, 245, 260-261, 265-270
+src/remindme/request.py          80      6    92%   46, 52, 75, 88, 94, 98
+src/remindme/response.py        129     17    87%   61, 81, 125, 128, 133, 146, 153, 158, 160, 163, 170, 179, 181, 192, 194, 204, 208
+-----------------------------------------------------------
+TOTAL                           546     55    90%
+Required test coverage of 85% reached. Total coverage: 89.93%
+92 passed in 0.23s

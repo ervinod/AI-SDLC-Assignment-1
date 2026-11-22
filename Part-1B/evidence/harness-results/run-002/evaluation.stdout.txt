@@ -1,0 +1,79 @@
+  C01 t1: service_error 0.091s
+  C01 t2: service_error 0.001s
+  C01 t3: service_error 0.001s
+  C02 t1: service_error 0.001s
+  C02 t2: service_error 0.002s
+  C02 t3: service_error 0.001s
+  C03 t1: service_error 0.001s
+  C03 t2: service_error 0.001s
+  C03 t3: service_error 0.001s
+  C04 t1: service_error 0.001s
+  C04 t2: service_error 0.001s
+  C04 t3: service_error 0.001s
+  C05 t1: service_error 0.001s
+  C05 t2: service_error 0.001s
+  C05 t3: service_error 0.001s
+  C06 t1: service_error 0.001s
+  C06 t2: service_error 0.001s
+  C06 t3: service_error 0.001s
+  C07 t1: service_error 0.001s
+  C07 t2: service_error 0.001s
+  C07 t3: service_error 0.001s
+  C08 t1: service_error 0.001s
+  C08 t2: service_error 0.001s
+  C08 t3: service_error 0.001s
+  C09 t1: service_error 0.001s
+  C09 t2: service_error 0.001s
+  C09 t3: service_error 0.001s
+  C10 t1: service_error 0.001s
+  C10 t2: service_error 0.001s
+  C10 t3: service_error 0.001s
+  C11 t1: service_error 0.001s
+  C11 t2: service_error 0.001s
+  C11 t3: service_error 0.001s
+  C12 t1: service_error 0.001s
+  C12 t2: service_error 0.001s
+  C12 t3: service_error 0.001s
+  C13 t1: service_error 0.001s
+  C13 t2: service_error 0.001s
+  C13 t3: service_error 0.001s
+  C14 t1: service_error 0.001s
+  C14 t2: service_error 0.001s
+  C14 t3: service_error 0.001s
+  C15 t1: service_error 0.001s
+  C15 t2: service_error 0.001s
+  C15 t3: service_error 0.001s
+  C16 t1: service_error 0.001s
+  C16 t2: service_error 0.001s
+  C16 t3: service_error 0.001s
+  C17 t1: service_error 0.001s
+  C17 t2: service_error 0.001s
+  C17 t3: service_error 0.001s
+  C18 t1: ok 0.0s
+  C18 t2: ok 0.0s
+  C18 t3: ok 0.0s
+  C19 t1: ok 0.0s
+  C19 t2: ok 0.0s
+  C19 t3: ok 0.0s
+  C20 t1: service_error 0.001s
+  C20 t2: service_error 0.001s
+  C20 t3: service_error 0.001s
+  C21 t1: service_error 0.001s
+  C21 t2: service_error 0.001s
+  C21 t3: service_error 0.001s
+  C22 t1: service_error 0.001s
+  C22 t2: service_error 0.001s
+  C22 t3: service_error 0.001s
+  C23 t1: service_error 0.001s
+  C23 t2: service_error 0.001s
+  C23 t3: service_error 0.001s
+  C24 t1: service_error 0.001s
+  C24 t2: service_error 0.001s
+  C24 t3: service_error 0.001s
+  THR-1 schema validity = 100%: 1.0 PASS
+  THR-2 universal invariants = 100%: 1.0 PASS
+  THR-3 guardrail cases = 100%: 0.3333 FAIL
+  THR-4 case pass rate >= 85%: 0.0833 FAIL
+  THR-5 mean semantic >= 0.85: 1.0 PASS
+  THR-6 service errors <= 10%: 0.9167 FAIL
+== evaluation: INCONCLUSIVE  (/Users/apple/Documents/Assignment-1/Part-1B/evidence/eval-runs/run-002)
