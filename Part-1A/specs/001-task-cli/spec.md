@@ -10,6 +10,16 @@
 priority sorting and task-status transitions. Single-user command-line tool whose behaviour is
 fully deterministic so that every acceptance criterion can be checked by an automated test."
 
+## Clarifications
+
+### Session 2026-11-22
+
+Answers below are the recommended options proposed during `/speckit-clarify`; the student delegated
+the choice to the coding agent ("do every step on my behalf"), so each was accepted as recommended.
+
+- Q: When several `--tag` values are given to `list`, must a task have ALL of them or ANY of them? → A: ALL (logical AND); `--status` combines with tags by AND as well.
+- Q: Can a task in `done` or `cancelled` be re-opened? → A: Yes, only back to `todo` (`done→todo`, `cancelled→todo`); no other transition leaves those states.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Create, view, edit and delete tasks (Priority: P1)
@@ -60,8 +70,10 @@ check stdout/stderr/exit code and the stored status.
    stderr is `error: invalid transition todo -> done`, and the stored status is still `todo`.
 3. **Given** task 1 has status `in_progress`, **When** the user runs `status 1 in_progress`, **Then**
    exit code is 2 and stderr is `error: invalid transition in_progress -> in_progress`.
-4. **Given** task 1 has status `done`, **When** the user runs `status 1 todo`, **Then** the outcome
-   follows FR-014.
+4. **Given** task 1 has status `done`, **When** the user runs `status 1 todo`, **Then** stdout is
+   `Task 1: done -> todo` and exit code is 0.
+5. **Given** task 1 has status `cancelled`, **When** the user runs `status 1 in_progress`, **Then**
+   exit code is 2 and stderr is `error: invalid transition cancelled -> in_progress`.
 
 ---
 
@@ -83,7 +95,7 @@ and compare stdout with the exact expected lines.
    `list --sort priority`, **Then** the order is high, high, medium, low, with ties broken by
    `created_at` ascending and then id ascending.
 3. **Given** tasks tagged `work`, `home` and `work,urgent`, **When** the user runs
-   `list --tag work --tag urgent`, **Then** the output follows FR-009.
+   `list --tag work --tag urgent`, **Then** only the task tagged `work,urgent` is listed.
 4. **Given** no task matches, **When** the user lists, **Then** stdout is exactly `No tasks found.`
    and exit code is 0.
 5. **Given** tasks exist, **When** the user runs `list --json`, **Then** stdout is a JSON array of the
@@ -123,9 +135,9 @@ and compare stdout with the exact expected lines.
   including to the same status, MUST be rejected with exit 2 and
   `error: invalid transition <from> -> <to>`.
 - **FR-008**: System MUST list tasks, optionally filtered by `--status <status>`.
-- **FR-009**: System MUST filter tasks by one or more `--tag` values with
-  [NEEDS CLARIFICATION: when several --tag values are given, must a task match ALL of them or ANY
-  of them?].
+- **FR-009**: System MUST filter tasks by one or more `--tag` values; a task is included only if it
+  has ALL given tags (tag values are normalised as in FR-003 before matching). `--tag` and
+  `--status` filters combine with logical AND.
 - **FR-010**: System MUST sort lists by id ascending by default, and with `--sort priority` by
   priority (high > medium > low), then `created_at` ascending, then id ascending.
 - **FR-011**: Human list output MUST be one line per task with tab-separated fields
@@ -136,8 +148,8 @@ and compare stdout with the exact expected lines.
 - **FR-013**: System MUST use exit codes 0 success, 1 task not found, 2 usage/validation error,
   3 data-file error; error messages go to stderr prefixed `error: `; nothing is written to stdout
   on error.
-- **FR-014**: Tasks in status `done` or `cancelled` [NEEDS CLARIFICATION: are `done`/`cancelled`
-  terminal, or can a task be re-opened to `todo`?].
+- **FR-014**: Tasks in status `done` or `cancelled` MAY be re-opened only to `todo`
+  (`done→todo`, `cancelled→todo`); every other transition out of these states is rejected per FR-007.
 - **FR-015**: Timestamps (`created_at`, `updated_at`) MUST be ISO-8601 UTC with second precision and
   a `Z` suffix, taken from the current time; if environment variable `TASKFLOW_NOW` is set to such a
   timestamp the system MUST use it instead (deterministic clock for tests and demos).

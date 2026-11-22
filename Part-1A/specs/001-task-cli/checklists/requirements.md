@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain — 2 open (FR-009 tag-match semantics, FR-014
+- [x] No [NEEDS CLARIFICATION] markers remain — 2 open (FR-009 tag-match semantics, FR-014
       re-open policy); resolved by `/speckit-clarify`
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
