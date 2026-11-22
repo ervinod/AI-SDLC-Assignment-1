@@ -31,10 +31,10 @@ coding agent implements `src/` only.
 
 - [ ] T005 [P] Write unit tests for validation of `data-model.md` Task.title, Task.priority, Task.tags and the clock (FR-001, FR-003, FR-015) in `tests/unit/test_models.py`
 - [ ] T006 [P] Write unit tests for store load/validate/atomic save (FR-012, exit 3, SC-004) in `tests/unit/test_store.py`
-- [ ] T007 Create error hierarchy with exit codes (FR-013) in `src/taskflow/errors.py`
-- [ ] T008 [P] Implement `Clock` honouring `TASKFLOW_NOW` (FR-015, data-model.md Task.created_at / Task.updated_at) in `src/taskflow/clock.py`
-- [ ] T009 [P] Implement `Task` dataclass, `Priority`/`Status` enums, title and tag validation (data-model.md Task.id, Task.title, Task.priority, Task.status, Task.tags) in `src/taskflow/models.py`
-- [ ] T010 Implement `JsonStore` with schema validation and atomic `os.replace` writes (data-model.md Task store) in `src/taskflow/store.py`
+- [x] T007 Create error hierarchy with exit codes (FR-013) in `src/taskflow/errors.py`
+- [x] T008 [P] Implement `Clock` honouring `TASKFLOW_NOW` (FR-015, data-model.md Task.created_at / Task.updated_at) in `src/taskflow/clock.py`
+- [x] T009 [P] Implement `Task` dataclass, `Priority`/`Status` enums, title and tag validation (data-model.md Task.id, Task.title, Task.priority, Task.status, Task.tags) in `src/taskflow/models.py`
+- [x] T010 Implement `JsonStore` with schema validation and atomic `os.replace` writes (data-model.md Task store) in `src/taskflow/store.py`
 
 **Checkpoint**: foundation ready.
 
@@ -45,9 +45,9 @@ coding agent implements `src/` only.
 **Goal**: CRUD with persistence. **Independent test**: contract tests US1 pass.
 
 - [ ] T011 [P] [US1] Write contract tests for US1 acceptance scenarios 1–6 and edge cases (titles, tags, ids, nothing-to-update, not-found) in `tests/contract/test_cli_crud.py`
-- [ ] T012 [US1] Implement `TaskService.add/get/update/delete` with id allocation from `next_id` (FR-001–FR-006, data-model.md Task.id) in `src/taskflow/service.py`
-- [ ] T013 [P] [US1] Implement JSON task rendering and success messages (FR-004, FR-016) in `src/taskflow/formatting.py`
-- [ ] T014 [US1] Implement argparse CLI `add/show/update/delete`, `--data`/`TASKFLOW_DATA` resolution and error→exit-code mapping (FR-012, FR-013) in `src/taskflow/cli.py` and `src/taskflow/__main__.py`
+- [x] T012 [US1] Implement `TaskService.add/get/update/delete` with id allocation from `next_id` (FR-001–FR-006, data-model.md Task.id) in `src/taskflow/service.py`
+- [x] T013 [P] [US1] Implement JSON task rendering and success messages (FR-004, FR-016) in `src/taskflow/formatting.py`
+- [x] T014 [US1] Implement argparse CLI `add/show/update/delete`, `--data`/`TASKFLOW_DATA` resolution and error→exit-code mapping (FR-012, FR-013) in `src/taskflow/cli.py` and `src/taskflow/__main__.py`
 
 ---
 
@@ -56,8 +56,8 @@ coding agent implements `src/` only.
 **Goal**: guarded transitions. **Independent test**: contract tests US2 pass.
 
 - [ ] T015 [P] [US2] Write contract tests for every allowed and a representative set of forbidden transitions, including same-status and re-open (FR-007, FR-014) in `tests/contract/test_cli_status.py`
-- [ ] T016 [US2] Implement transition table and `TaskService.transition` (data-model.md Task.status state machine) in `src/taskflow/service.py`
-- [ ] T017 [US2] Add `status ID NEW` sub-command in `src/taskflow/cli.py`
+- [x] T016 [US2] Implement transition table and `TaskService.transition` (data-model.md Task.status state machine) in `src/taskflow/service.py`
+- [x] T017 [US2] Add `status ID NEW` sub-command in `src/taskflow/cli.py`
 
 ---
 
@@ -66,9 +66,9 @@ coding agent implements `src/` only.
 **Goal**: list with tag/status filters and priority sort. **Independent test**: contract tests US3 pass.
 
 - [ ] T018 [P] [US3] Write contract tests for list default order, priority sort with ties, AND tag filter, status filter, empty result, `--json` (FR-008–FR-011) in `tests/contract/test_cli_list.py`
-- [ ] T019 [US3] Implement `TaskService.list(tags, status, sort)` (FR-008–FR-010) in `src/taskflow/service.py`
-- [ ] T020 [US3] Implement human tab-separated and JSON list rendering (FR-011) in `src/taskflow/formatting.py`
-- [ ] T021 [US3] Add `list` sub-command in `src/taskflow/cli.py`
+- [x] T019 [US3] Implement `TaskService.list(tags, status, sort)` (FR-008–FR-010) in `src/taskflow/service.py`
+- [x] T020 [US3] Implement human tab-separated and JSON list rendering (FR-011) in `src/taskflow/formatting.py`
+- [x] T021 [US3] Add `list` sub-command in `src/taskflow/cli.py`
 
 ---
 
