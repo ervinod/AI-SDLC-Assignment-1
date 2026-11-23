@@ -26,6 +26,7 @@ from remindme.response import (
     reject,
     truncate,
 )
+from remindme.safety import REFUSAL_REASON, harmful
 
 WEEKDAYS = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
 CLOCK_PATTERN = re.compile(r"^(\d{1,2}):(\d{2})(?::\d{2})?$")
@@ -43,6 +44,8 @@ class _TimeError(Exception):
 
 def postprocess(extraction: object, request: Request) -> dict:
     """Turn an (untrusted) Extraction into a response that satisfies SCH and INV."""
+    if harmful(request.text):  # GR-2 enforced in code, whatever the model returned
+        return reject(REFUSAL_REASON)
     if not isinstance(extraction, dict):
         return clarify(["task"])
     intent = extraction.get("intent")
