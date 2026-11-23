@@ -1,4 +1,4 @@
-PROMPT_VERSION: 1
+PROMPT_VERSION: 2
 
 # RemindMe extraction instructions
 
@@ -64,6 +64,8 @@ Always output all fields. Use `null` for every field that does not apply to the 
   "every Monday"/"weekly" → `weekly` (also set `weekday` when a day is named); "every weekday"/
   "on weekdays"/"Monday to Friday" → `weekdays`; "every month"/"monthly" → `monthly` (set `date`
   to the next such day of month when one is named). A one-off reminder → `none`.
+  Use `none` unless the user literally says the reminder repeats ("every", "each", "daily",
+  "weekly", "weekdays", "monthly"). "tomorrow", "next Monday" or "on Friday" are one-off → `none`.
   `null` for all intents other than `create`.
 - `target_id`: for `reschedule`, `snooze`, `cancel` — the `id` of the ONE existing reminder the
   user refers to, copied exactly from the list. Otherwise `null`.
@@ -104,6 +106,21 @@ Use intent `clarify`, list what is missing in `missing`, and ask a `question`:
   `clarify` with `missing` including `target` and `target_id` `null`. Never guess an id and never
   invent one that is not in the list.
 - Gibberish or text with no recognisable request → `clarify` with the missing items.
+
+## Short examples (current date Monday; shown as key fields only)
+
+- "remind me to water the plants at 8am" → create, task "Water the plants",
+  time_spec {time "08:00"}, recurrence none.
+- "on Thursday at 3:45 pm remind me to feed the cat" → create, task "Feed the cat",
+  time_spec {weekday "thursday", time "15:45"}, recurrence none.
+- "every weekday at 6:45 remind me to meditate" → create, task "Meditate",
+  time_spec {time "06:45"}, recurrence weekdays.
+- "remind me to renew my passport" → clarify, task "Renew my passport", missing ["time"].
+- "remind me tomorrow to buy stamps" → clarify, task "Buy stamps", missing ["time"].
+- "remind me at 9pm" → clarify, task null, missing ["task"].
+- "snooze the reminder about the bank for 10 minutes" with reminders "Call the bank" and
+  "Visit the bank" → clarify, missing ["target"], target_id null (two match).
+- "cancel my piano reminder" when no reminder mentions piano → clarify, missing ["target"].
 
 ## Safety
 

@@ -1,7 +1,8 @@
 """Deterministic post-processing of a model Extraction into a Response (plan.md R-1…R-11).
 
 The model only supplies a symbolic ``time_spec``; every date, timezone, snooze and target
-decision is made here. Anything invalid degrades to a safe ``clarify`` (or keeps ``reject``).
+decision is made here, after ``grounding`` has checked the extraction against the user's text.
+Anything invalid degrades to a safe ``clarify`` (or keeps ``reject``).
 """
 
 import calendar
@@ -9,6 +10,7 @@ import re
 from collections.abc import Callable
 from datetime import UTC, date, datetime, time, timedelta
 
+from remindme.grounding import ground
 from remindme.request import Reminder, Request
 from remindme.response import (
     INTENTS,
@@ -48,7 +50,8 @@ def postprocess(extraction: object, request: Request) -> dict:
         return clarify(["task"])
     if contains_canary(extraction):
         return reject() if intent == "reject" else clarify(["task"])
-    return _HANDLERS[intent](extraction, request)
+    grounded = ground(extraction, request)  # constitution II: only text-supported values act
+    return _HANDLERS[grounded["intent"]](grounded, request)
 
 
 def fallback(extraction: object) -> dict:
