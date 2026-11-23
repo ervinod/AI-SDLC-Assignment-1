@@ -15,10 +15,10 @@
    `Part-1B/evidence/harness-log.md`.
 2. **Human review**: fill in section "Human review" in `Part-1A/evidence/harness-log.md` and
    `Part-1B/evidence/harness-log.md` (ACCEPT/REJECT, justification, limitations, residual risks).
-3. **Create a public GitHub repo** (for example `Assignment-1`) and push:
+3. **Create a public GitHub repo** (for example `AI-SDLC-Assignment-1`) and push:
    ```bash
    cd ~/Documents/Assignment-1
-   git remote add origin https://github.com/<your-username>/Assignment-1.git
+   git remote add origin https://github.com/<your-username>/AI-SDLC-Assignment-1.git
    git push -u origin main
    ```
 4. **Record the demo video** (script below) and upload it to Google Drive or OneDrive, shared with
