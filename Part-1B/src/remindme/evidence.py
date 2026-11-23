@@ -35,8 +35,9 @@ _ORD = r"(?:st|nd|rd|th)"
 _FLAGS = re.IGNORECASE
 
 DURATION_RE = re.compile(
-    rf"\b(?:(?P<prefix>in|after|within)\s+)?"
-    rf"(?:(?P<frac>(?:a\s+)?(?:half|quarter)(?:\s+of)?\s+an?)|(?P<num>{_NUM}))\s*"
+    r"(?:\b(?P<prefix>in|after|within)\s+)?"
+    r"(?P<sign>(?<!\w)[-+\u2212\u2013]\s*|\b(?:minus|negative|plus)\s+)?"
+    rf"\b(?:(?P<frac>(?:a\s+)?(?:half|quarter)(?:\s+of)?\s+an?)|(?P<num>{_NUM}))\s*"
     r"(?P<unit>minutes?|mins?|hours?|hrs?)\b(?P<andhalf>\s+and\s+a\s+half)?",
     _FLAGS,
 )
@@ -101,8 +102,8 @@ class Evidence:
     """What the text itself states. Each clock mention lists its plausible readings."""
 
     clocks: list[tuple[time, ...]] = field(default_factory=list)
-    offsets: list[int] = field(default_factory=list)
-    durations: list[int] = field(default_factory=list)
+    offsets: list[int | None] = field(default_factory=list)  # None = signed / invalid amount
+    durations: list[int | None] = field(default_factory=list)
     days: list[dict | None] = field(default_factory=list)
     recurrences: set[str] = field(default_factory=set)
     unsupported_recurrence: bool = False
@@ -137,6 +138,8 @@ def _durations(text: str, evidence: Evidence) -> str:
         minutes = _duration_minutes(match)
         if minutes is None:
             continue
+        if match.group("sign"):
+            minutes = None  # a signed amount ("-5 minutes") is never read as a positive one
         evidence.durations.append(minutes)
         if match.group("prefix"):
             evidence.offsets.append(minutes)

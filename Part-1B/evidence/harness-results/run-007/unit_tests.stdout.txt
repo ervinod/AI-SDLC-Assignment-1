@@ -1,0 +1,40 @@
+........................................................................ [ 54%]
+.....................F......................................             [100%]
+=================================== FAILURES ===================================
+______________ test_snooze_minutes_out_of_range_means_clarify[-5] ______________
+
+minutes = -5
+
+    @pytest.mark.parametrize("minutes", [0, -5, 1441, None])
+    def test_snooze_minutes_out_of_range_means_clarify(minutes):
+        said = "" if minutes is None else f" by {minutes} minutes"
+        out = run(ext("snooze", target_id="r1", snooze_minutes=minutes), R(f"snooze my medicine{said}"))
+>       assert out["intent"] == "clarify" and out["missing"] == ["time"]
+E       AssertionError: assert ('snooze' == 'clarify'
+E         
+E         - clarify
+E         + snooze)
+
+tests/test_modify.py:53: AssertionError
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/remindme/__init__.py          1      0   100%
+src/remindme/__main__.py          2      2     0%   3-5
+src/remindme/agent.py            28      5    82%   25-26, 42-44, 46
+src/remindme/cli.py              38      0   100%
+src/remindme/errors.py            2      0   100%
+src/remindme/evidence.py        170     35    79%   126, 130, 150-151, 160, 165-172, 178-180, 188-189, 192-193, 204-208, 218, 221-227, 256-257
+src/remindme/grounding.py       153     11    93%   100, 103-105, 136, 143-144, 153, 161, 206-207
+src/remindme/llm.py             143     10    93%   46-47, 157-162, 173, 199
+src/remindme/postprocess.py     180     20    89%   59-61, 146, 149, 202, 226, 229-230, 238, 243, 248, 263-264, 268-273
+src/remindme/request.py          80      7    91%   40, 46, 52, 75, 88, 94, 98
+src/remindme/response.py        129     17    87%   61, 81, 125, 128, 133, 146, 153, 158, 160, 163, 170, 179, 181, 192, 194, 204, 208
+-----------------------------------------------------------
+TOTAL                           926    107    88%
+Required test coverage of 85% reached. Total coverage: 88.44%
+=========================== short test summary info ============================
+FAILED tests/test_modify.py::test_snooze_minutes_out_of_range_means_clarify[-5]
+1 failed, 131 passed in 0.42s
