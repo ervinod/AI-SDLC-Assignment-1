@@ -153,8 +153,9 @@ def main():
     ap.add_argument("--k", type=int, default=None)
     ap.add_argument("--label", default="")
     ap.add_argument("--replay", type=Path)
+    ap.add_argument("--dataset", type=Path, default=DATASET, help="default evals/dataset.json")
     args = ap.parse_args()
-    data = json.loads(DATASET.read_text())
+    data = json.loads(args.dataset.read_text())
     cases = data["cases"]
     k = args.k or data["k_trials"]
 
@@ -163,7 +164,10 @@ def main():
         meta = recorded["meta"] | {"replayed_from": str(args.replay), "mode": "replay"}
         raw = recorded["trials"]
     else:
-        meta = _meta(k, args.label, "live")
+        meta = _meta(k, args.label, "live") | {
+            "dataset": args.dataset.name,
+            "dataset_sha256": hashlib.sha256(args.dataset.read_bytes()).hexdigest(),
+        }
         raw = live(cases, k)
 
     by_id = {c["id"]: c for c in cases}

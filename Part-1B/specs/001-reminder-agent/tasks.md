@@ -84,6 +84,13 @@ unchanged.
 
 - [x] T031 Isolate tests from provider environment variables (autouse fixture in `tests/conftest.py`); found by harness run-003, where `REMINDME_PROVIDER=ollama` leaked into 7 Anthropic-path tests
 
+## Phase 10: GR-7 evidence grounding (spec revision 2026-11-23, after live run-005)
+
+- [x] T032 Repair from run-005 failure evidence: `src/remindme/evidence.py`, `src/remindme/grounding.py`, prompt v2 (coding agent)
+- [x] T033 Make offline test request texts state what their fake extraction claims (GR-7); assertions unchanged
+- [x] T034 [P] Write offline tests for GR-7 (a)–(f) and evidence parsing in `tests/test_grounding.py`
+- [x] T035 [P] Add a held-out evaluation set `evals/holdout.json` (written after the repair, never shown to the coding agent) reported separately to estimate over-fitting
+
 ## Dependencies
 
 Setup (T001–T006) → Foundational (T007–T010) → US1 (T011–T015) → US2, US3, US4 (parallel) → T022–T025.

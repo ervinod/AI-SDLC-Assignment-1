@@ -44,12 +44,13 @@ def test_gr1_reject_without_model_call(text, reason):
 
 def test_gr1_500_chars_is_allowed():
     fake = FakeExtractor(ext(task="read", time_spec=ts(offset_minutes=5), recurrence="none"))
-    out = handle(req("y" * 500), extractor=fake)
+    text = "remind me to read in 5 minutes "  # GR-7 (T033): the text states what is extracted
+    out = handle(req(text + "y" * (500 - len(text))), extractor=fake)
     assert fake.calls == 1
     assert out["intent"] == "create"
 
 
 def test_reminders_are_accepted():
     fake = FakeExtractor(ext("cancel", target_id="r1"))
-    out = handle(req(reminders=REMINDERS), extractor=fake)
+    out = handle(req("cancel my medicine reminder", reminders=REMINDERS), extractor=fake)
     assert out["target_id"] == "r1"

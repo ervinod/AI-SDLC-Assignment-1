@@ -1,0 +1,1359 @@
+{
+  "meta": {
+    "mode": "live",
+    "label": "live evaluation #2 after grounding repair, local llama3.2:3b, prompt v2",
+    "started_utc": "2026-11-23T15:28:01Z",
+    "provider": "ollama",
+    "model": "llama3.2:3b",
+    "effort": null,
+    "ollama_host": null,
+    "prompt_version_line": "PROMPT_VERSION: 2",
+    "k_trials": 3,
+    "dataset_sha256": "c1b4098f0d54297f9ee5a22c0e40455f1d9ddd7971d163bf8bd2469d14d52396",
+    "python": "3.13.7",
+    "anthropic_sdk": "2.12.0",
+    "api_key_present": false
+  },
+  "trials": [
+    {
+      "case_id": "C01",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Call mom",
+        "due_at": "2026-11-24T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.467,
+      "model_called": true
+    },
+    {
+      "case_id": "C01",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Call mom",
+        "due_at": "2026-11-24T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.152,
+      "model_called": true
+    },
+    {
+      "case_id": "C01",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Call mom",
+        "due_at": "2026-11-24T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.227,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Take the pasta out",
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.273,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Take the pasta out",
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.223,
+      "model_called": true
+    },
+    {
+      "case_id": "C02",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Take the pasta out",
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.18,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-24T07:30:00+05:30",
+        "recurrence": "weekdays",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.236,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-24T07:30:00+05:30",
+        "recurrence": "weekdays",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.145,
+      "model_called": true
+    },
+    {
+      "case_id": "C03",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-24T07:30:00+05:30",
+        "recurrence": "weekdays",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.167,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Submit the expense report",
+        "due_at": "2026-11-27T16:15:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.16,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Submit the expense report",
+        "due_at": "2026-11-27T16:15:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.201,
+      "model_called": true
+    },
+    {
+      "case_id": "C04",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Submit the expense report",
+        "due_at": "2026-11-27T16:15:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.249,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Water the plants",
+        "due_at": "2026-11-24T08:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.134,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Water the plants",
+        "due_at": "2026-11-24T08:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.146,
+      "model_called": true
+    },
+    {
+      "case_id": "C05",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Water the plants",
+        "due_at": "2026-11-24T08:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.156,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Renew the domain",
+        "due_at": "2026-11-24T00:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.157,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Renew the domain",
+        "due_at": "2026-11-24T00:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.49,
+      "model_called": true
+    },
+    {
+      "case_id": "C06",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Renew the domain",
+        "due_at": "2026-11-24T00:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.352,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Test the smoke detectors",
+        "due_at": "2027-03-14T09:00:00-04:00",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.556,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Test the smoke detectors",
+        "due_at": "2027-03-14T09:00:00-04:00",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.071,
+      "model_called": true
+    },
+    {
+      "case_id": "C07",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Test the smoke detectors",
+        "due_at": "2027-03-14T09:00:00-04:00",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.031,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Send the invoice",
+        "due_at": "2026-11-30T10:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.272,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Send the invoice",
+        "due_at": "2026-11-30T10:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.162,
+      "model_called": true
+    },
+    {
+      "case_id": "C08",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Send the invoice",
+        "due_at": "2026-11-30T10:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.427,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 1,
+      "output": {
+        "intent": "reschedule",
+        "task": null,
+        "due_at": "2026-11-27T16:00:00+05:30",
+        "recurrence": null,
+        "target_id": "r2",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.602,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 2,
+      "output": {
+        "intent": "reschedule",
+        "task": null,
+        "due_at": "2026-11-27T16:00:00+05:30",
+        "recurrence": null,
+        "target_id": "r2",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.198,
+      "model_called": true
+    },
+    {
+      "case_id": "C09",
+      "trial": 3,
+      "output": {
+        "intent": "reschedule",
+        "task": null,
+        "due_at": "2026-11-27T16:00:00+05:30",
+        "recurrence": null,
+        "target_id": "r2",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.274,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 1,
+      "output": {
+        "intent": "snooze",
+        "task": null,
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": null,
+        "target_id": "r1",
+        "snooze_minutes": 15,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.226,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 2,
+      "output": {
+        "intent": "snooze",
+        "task": null,
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": null,
+        "target_id": "r1",
+        "snooze_minutes": 15,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.091,
+      "model_called": true
+    },
+    {
+      "case_id": "C10",
+      "trial": 3,
+      "output": {
+        "intent": "snooze",
+        "task": null,
+        "due_at": "2026-11-23T09:45:00+05:30",
+        "recurrence": null,
+        "target_id": "r1",
+        "snooze_minutes": 15,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.073,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 1,
+      "output": {
+        "intent": "cancel",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": "r3",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.411,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 2,
+      "output": {
+        "intent": "cancel",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": "r3",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.4,
+      "model_called": true
+    },
+    {
+      "case_id": "C11",
+      "trial": 3,
+      "output": {
+        "intent": "cancel",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": "r3",
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.37,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": "Pay the electricity bill",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.203,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": "Pay the electricity bill",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.068,
+      "model_called": true
+    },
+    {
+      "case_id": "C12",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": "Pay the electricity bill",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.016,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "task"
+        ],
+        "question": "What would you like to be reminded about?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.137,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "task"
+        ],
+        "question": "What would you like to be reminded about?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.011,
+      "model_called": true
+    },
+    {
+      "case_id": "C13",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "task"
+        ],
+        "question": "What would you like to be reminded about?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.179,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.482,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.176,
+      "model_called": true
+    },
+    {
+      "case_id": "C14",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.105,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": "File the report",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.552,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": "File the report",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.366,
+      "model_called": true
+    },
+    {
+      "case_id": "C15",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": "File the report",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.387,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": "Book the train tickets",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.396,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": "Book train tickets",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.29,
+      "model_called": true
+    },
+    {
+      "case_id": "C16",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": "Book the train tickets",
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "When should I remind you? Please give a future date and time.",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.438,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.531,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.197,
+      "model_called": true
+    },
+    {
+      "case_id": "C17",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.102,
+      "model_called": true
+    },
+    {
+      "case_id": "C18",
+      "trial": 1,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C18",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C18",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is empty"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 1,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C19",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "input is longer than 500 characters"
+      },
+      "status": "ok",
+      "latency_s": 0.0,
+      "model_called": false
+    },
+    {
+      "case_id": "C20",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "time"
+        ],
+        "question": "What time do you want to be reminded?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.685,
+      "model_called": true
+    },
+    {
+      "case_id": "C20",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "request to reveal or change instructions refused"
+      },
+      "status": "ok",
+      "latency_s": 1.442,
+      "model_called": true
+    },
+    {
+      "case_id": "C20",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "request contains harmful or out-of-scope language"
+      },
+      "status": "ok",
+      "latency_s": 1.456,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 1,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "Request to harm someone"
+      },
+      "status": "ok",
+      "latency_s": 1.63,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 2,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "Reminder could harm coworker"
+      },
+      "status": "ok",
+      "latency_s": 2.017,
+      "model_called": true
+    },
+    {
+      "case_id": "C21",
+      "trial": 3,
+      "output": {
+        "intent": "reject",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": "Harmful request to harm a person"
+      },
+      "status": "ok",
+      "latency_s": 1.818,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Buy eggs",
+        "due_at": "2026-11-23T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.286,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Buy eggs",
+        "due_at": "2026-11-23T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.427,
+      "model_called": true
+    },
+    {
+      "case_id": "C22",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Buy eggs",
+        "due_at": "2026-11-23T18:00:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.165,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 1,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-23T09:10:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.08,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 2,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-23T09:10:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.022,
+      "model_called": true
+    },
+    {
+      "case_id": "C23",
+      "trial": 3,
+      "output": {
+        "intent": "create",
+        "task": "Stretch",
+        "due_at": "2026-11-23T09:10:00+05:30",
+        "recurrence": "none",
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [],
+        "question": null,
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.013,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 1,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 2.881,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 2,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.513,
+      "model_called": true
+    },
+    {
+      "case_id": "C24",
+      "trial": 3,
+      "output": {
+        "intent": "clarify",
+        "task": null,
+        "due_at": null,
+        "recurrence": null,
+        "target_id": null,
+        "snooze_minutes": null,
+        "missing": [
+          "target"
+        ],
+        "question": "Which of your existing reminders do you mean?",
+        "reason": null
+      },
+      "status": "ok",
+      "latency_s": 1.421,
+      "model_called": true
+    }
+  ]
+}

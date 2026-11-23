@@ -117,6 +117,16 @@ sorted keys), exit 0. `--now` defaults to the current time in `--tz` (default `U
   or a body without `message.content` → `ServiceError`.
 - The evaluation runner records `provider` and the effective model in run metadata.
 
+## Amendment 2: evidence grounding (GR-7)
+
+- **R-12** `remindme.evidence.read_evidence(text, today)` extracts clock times (12/24-hour, noon,
+  midnight), offsets ("in N minutes/hours"), days (today/tomorrow/weekday/explicit dates), durations
+  and recurrence wording. `remindme.grounding.ground(extraction, request)` runs before R-1…R-11 and
+  replaces or drops ungrounded fields per GR-7 (a)–(f); dropped fields make R-4/R-8 produce
+  `clarify`.
+- Consequence for offline tests: a fake extraction is only acted on when the request text states
+  the same information (as a real user request would).
+
 ## Source Layout
 
 ```text

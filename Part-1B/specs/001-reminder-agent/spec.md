@@ -181,6 +181,18 @@ and lists what is missing, instead of inventing a value.
 - **GR-5**: A requested time in the past → `clarify` with `time` missing.
 - **GR-6**: A reference matching zero or several existing reminders → `clarify` with `target`
   missing; never guess an id (INV-9).
+- **GR-7** (evidence grounding, added 2026-11-23 after evaluation run-005): every value that drives an
+  action MUST be supported by the user's text, checked deterministically:
+  (a) the clock time and day come from time expressions found in the text; the model's `time_spec`
+  only chooses between readings the text allows; no time expression → `clarify` (`time`);
+  (b) `recurrence` is `none` unless repetition is stated in the text;
+  (c) `task` must contain content words from the text (scheduling words alone → `clarify` `task`);
+  (d) the target is the single existing reminder whose words the text refers to, or an id named in
+  the text; zero or several candidates, an unknown id or a bulk request ("all reminders") →
+  `clarify` (`target`); (e) snooze minutes come from a duration in the text;
+  (f) a model `clarify` that only lacks `time` MAY become `create` when the text states both the
+  task and a time, contains a create cue ("remind me", "remember to"), no modify cue and no harm
+  words.
 
 ### Evaluation Threshold (declared before evaluation)
 
@@ -232,3 +244,7 @@ and lists what is missing, instead of inventing a value.
 - 2026-11-22 — FR-011 added (constitution 1.1.0). Reason: the live evaluation could not run because
   no Anthropic API key is available (harness runs 001–002 INCONCLUSIVE, THR-6). The dataset,
   expected results, invariants, guardrails and thresholds are unchanged.
+- 2026-11-23 — GR-7 added. Reason: live evaluation run-005 (local llama3.2:3b) showed the model
+  inventing times (C12, C16), guessing reminder targets (C14, C17, C24 — unsafe actions, SC-003) and
+  mis-converting 12-hour times. GR-4/GR-6 already forbade this; GR-7 states how the application
+  enforces it deterministically. Dataset, expected results and thresholds unchanged.

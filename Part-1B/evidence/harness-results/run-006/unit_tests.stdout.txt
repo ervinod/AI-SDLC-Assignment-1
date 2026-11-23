@@ -1,0 +1,706 @@
+...................FFFFFFFFFFFFFFFFFFFFFFFFF.................FFFFFFFFFF. [ 69%]
+FF.FF.FF......................FF
+ERROR: Coverage failure: total of 78 is less than fail-under=85
+                                                                         [100%]
+=================================== FAILURES ===================================
+_________________________ test_us1_as1_tomorrow_at_6pm _________________________
+
+    def test_us1_as1_tomorrow_at_6pm():
+        out = create(ts(day_offset=1, time="18:00"))
+>       assert out == {
+            "intent": "create",
+            "task": "call mom",
+            "due_at": "2026-11-24T18:00:00+05:30",
+            "recurrence": "none",
+            "target_id": None,
+            "snooze_minutes": None,
+            "missing": [],
+            "question": None,
+            "reason": None,
+        }
+E       AssertionError: assert {'intent': 'c...e': None, ...} == {'intent': 'c...: 'none', ...}
+E         
+E         Omitting 3 identical items, use -vv to show
+E         Differing items:
+E         {'missing': ['task', 'time']} != {'missing': []}
+E         {'question': 'What would you like to be reminded about? When should I remind you? Please give a future date and time.'} != {'question': None}
+E         {'task': None} != {'task': 'call mom'}
+E         {'recurrence': None} != {'recurrence': 'none'}...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_create.py:14: AssertionError
+____________________________ test_r1_offset_minutes ____________________________
+
+    def test_r1_offset_minutes():
+>       assert create(ts(offset_minutes=45))["due_at"] == "2026-11-23T09:45:00+05:30"
+E       AssertionError: assert None == '2026-11-23T09:45:00+05:30'
+
+tests/test_create.py:28: AssertionError
+_____________________ test_r1_offset_keeps_seconds_of_now ______________________
+
+    def test_r1_offset_keeps_seconds_of_now():
+        out = create(ts(offset_minutes=10), request=req(now="2026-11-23T09:00:30+05:30"))
+>       assert out["due_at"] == "2026-11-23T09:10:30+05:30"
+E       AssertionError: assert None == '2026-11-23T09:10:30+05:30'
+
+tests/test_create.py:33: AssertionError
+___________ test_r2_weekday_strictly_after_today[friday-2026-11-27] ____________
+
+weekday = 'friday', expected = '2026-11-27'
+
+    @pytest.mark.parametrize(
+        ("weekday", "expected"),
+        [("friday", "2026-11-27"), ("tuesday", "2026-11-24"), ("monday", "2026-11-30")],
+    )
+    def test_r2_weekday_strictly_after_today(weekday, expected):
+        out = create(ts(weekday=weekday, time="10:00"))
+>       assert out["due_at"] == f"{expected}T10:00:00+05:30"
+E       AssertionError: assert None == '2026-11-27T10:00:00+05:30'
+
+tests/test_create.py:42: AssertionError
+___________ test_r2_weekday_strictly_after_today[tuesday-2026-11-24] ___________
+
+weekday = 'tuesday', expected = '2026-11-24'
+
+    @pytest.mark.parametrize(
+        ("weekday", "expected"),
+        [("friday", "2026-11-27"), ("tuesday", "2026-11-24"), ("monday", "2026-11-30")],
+    )
+    def test_r2_weekday_strictly_after_today(weekday, expected):
+        out = create(ts(weekday=weekday, time="10:00"))
+>       assert out["due_at"] == f"{expected}T10:00:00+05:30"
+E       AssertionError: assert None == '2026-11-24T10:00:00+05:30'
+
+tests/test_create.py:42: AssertionError
+___________ test_r2_weekday_strictly_after_today[monday-2026-11-30] ____________
+
+weekday = 'monday', expected = '2026-11-30'
+
+    @pytest.mark.parametrize(
+        ("weekday", "expected"),
+        [("friday", "2026-11-27"), ("tuesday", "2026-11-24"), ("monday", "2026-11-30")],
+    )
+    def test_r2_weekday_strictly_after_today(weekday, expected):
+        out = create(ts(weekday=weekday, time="10:00"))
+>       assert out["due_at"] == f"{expected}T10:00:00+05:30"
+E       AssertionError: assert None == '2026-11-30T10:00:00+05:30'
+
+tests/test_create.py:42: AssertionError
+____________________________ test_r2_explicit_date _____________________________
+
+    def test_r2_explicit_date():
+>       assert create(ts(date="2026-12-25", time="08:00"))["due_at"] == "2026-12-25T08:00:00+05:30"
+E       AssertionError: assert None == '2026-12-25T08:00:00+05:30'
+
+tests/test_create.py:46: AssertionError
+_ test_fr007_time_without_date_next_occurrence[08:00-2026-11-24T08:00:00+05:30] _
+
+time = '08:00', expected = '2026-11-24T08:00:00+05:30'
+
+    @pytest.mark.parametrize(
+        ("time", "expected"),
+        [("08:00", "2026-11-24T08:00:00+05:30"), ("10:00", "2026-11-23T10:00:00+05:30")],
+    )
+    def test_fr007_time_without_date_next_occurrence(time, expected):
+>       assert create(ts(time=time))["due_at"] == expected
+E       AssertionError: assert None == '2026-11-24T08:00:00+05:30'
+
+tests/test_create.py:54: AssertionError
+_ test_fr007_time_without_date_next_occurrence[10:00-2026-11-23T10:00:00+05:30] _
+
+time = '10:00', expected = '2026-11-23T10:00:00+05:30'
+
+    @pytest.mark.parametrize(
+        ("time", "expected"),
+        [("08:00", "2026-11-24T08:00:00+05:30"), ("10:00", "2026-11-23T10:00:00+05:30")],
+    )
+    def test_fr007_time_without_date_next_occurrence(time, expected):
+>       assert create(ts(time=time))["due_at"] == expected
+E       AssertionError: assert None == '2026-11-23T10:00:00+05:30'
+
+tests/test_create.py:54: AssertionError
+__________________________ test_midnight_is_next_day ___________________________
+
+    def test_midnight_is_next_day():
+>       assert create(ts(time="00:00"))["due_at"] == "2026-11-24T00:00:00+05:30"
+E       AssertionError: assert None == '2026-11-24T00:00:00+05:30'
+
+tests/test_create.py:58: AssertionError
+_____________________________ test_inv8_dst_offset _____________________________
+
+    def test_inv8_dst_offset():
+        request = req(now="2027-03-13T20:00:00-05:00", tz="America/New_York")
+>       assert create(ts(day_offset=1, time="09:00"), request=request)["due_at"] == (
+            "2027-03-14T09:00:00-04:00"
+        )
+E       AssertionError: assert None == '2027-03-14T09:00:00-04:00'
+
+tests/test_create.py:63: AssertionError
+_____________________ test_fr008_weekdays_first_occurrence _____________________
+
+    def test_fr008_weekdays_first_occurrence():
+        out = create(ts(time="07:30"), recurrence="weekdays")
+>       assert (out["recurrence"], out["due_at"]) == ("weekdays", "2026-11-24T07:30:00+05:30")
+E       AssertionError: assert (None, None) == ('weekdays', ...:30:00+05:30')
+E         
+E         At index 0 diff: None != 'weekdays'
+E         Use -v to get more diff
+
+tests/test_create.py:70: AssertionError
+___________________ test_r7_weekdays_rolls_weekend_to_monday ___________________
+
+    def test_r7_weekdays_rolls_weekend_to_monday():
+        request = req(now="2026-11-27T20:00:00+05:30")  # Friday evening
+        out = create(ts(time="07:30"), recurrence="weekdays", request=request)
+>       assert out["due_at"] == "2026-11-30T07:30:00+05:30"
+E       AssertionError: assert None == '2026-11-30T07:30:00+05:30'
+
+tests/test_create.py:76: AssertionError
+_______________ test_fr008_recurrence_values_pass_through[daily] _______________
+
+recurrence = 'daily'
+
+    @pytest.mark.parametrize("recurrence", ["daily", "weekly", "monthly"])
+    def test_fr008_recurrence_values_pass_through(recurrence):
+>       assert create(ts(day_offset=1, time="09:00"), recurrence=recurrence)["recurrence"] == recurrence
+E       AssertionError: assert None == 'daily'
+
+tests/test_create.py:81: AssertionError
+______________ test_fr008_recurrence_values_pass_through[weekly] _______________
+
+recurrence = 'weekly'
+
+    @pytest.mark.parametrize("recurrence", ["daily", "weekly", "monthly"])
+    def test_fr008_recurrence_values_pass_through(recurrence):
+>       assert create(ts(day_offset=1, time="09:00"), recurrence=recurrence)["recurrence"] == recurrence
+E       AssertionError: assert None == 'weekly'
+
+tests/test_create.py:81: AssertionError
+______________ test_fr008_recurrence_values_pass_through[monthly] ______________
+
+recurrence = 'monthly'
+
+    @pytest.mark.parametrize("recurrence", ["daily", "weekly", "monthly"])
+    def test_fr008_recurrence_values_pass_through(recurrence):
+>       assert create(ts(day_offset=1, time="09:00"), recurrence=recurrence)["recurrence"] == recurrence
+E       AssertionError: assert None == 'monthly'
+
+tests/test_create.py:81: AssertionError
+_____________________ test_r11_long_task_truncated_to_120 ______________________
+
+    def test_r11_long_task_truncated_to_120():
+        out = create(ts(day_offset=1, time="09:00"), task="word " * 60)
+>       assert out["intent"] == "create" and 1 <= len(out["task"]) <= 120
+E       AssertionError: assert ('clarify' == 'create'
+E         
+E         - create
+E         + clarify)
+
+tests/test_create.py:86: AssertionError
+____________________ test_gr4_no_time_means_clarify[spec0] _____________________
+
+spec = {'offset_minutes': None, 'day_offset': 1, 'weekday': None, 'date': None, ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(day_offset=1),  # R-4 date without time
+            ts(weekday="friday"),
+            None,  # no time information at all
+            ts(),
+        ],
+    )
+    def test_gr4_no_time_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:100: AssertionError
+____________________ test_gr4_no_time_means_clarify[spec1] _____________________
+
+spec = {'offset_minutes': None, 'day_offset': None, 'weekday': 'friday', 'date': None, ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(day_offset=1),  # R-4 date without time
+            ts(weekday="friday"),
+            None,  # no time information at all
+            ts(),
+        ],
+    )
+    def test_gr4_no_time_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:100: AssertionError
+_____________________ test_gr4_no_time_means_clarify[None] _____________________
+
+spec = None
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(day_offset=1),  # R-4 date without time
+            ts(weekday="friday"),
+            None,  # no time information at all
+            ts(),
+        ],
+    )
+    def test_gr4_no_time_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:100: AssertionError
+____________________ test_gr4_no_time_means_clarify[spec3] _____________________
+
+spec = {'offset_minutes': None, 'day_offset': None, 'weekday': None, 'date': None, ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(day_offset=1),  # R-4 date without time
+            ts(weekday="friday"),
+            None,  # no time information at all
+            ts(),
+        ],
+    )
+    def test_gr4_no_time_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:100: AssertionError
+_______________ test_gr5_inv7_out_of_range_means_clarify[spec0] ________________
+
+spec = {'offset_minutes': None, 'day_offset': None, 'weekday': None, 'date': '2026-11-22', ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(date="2026-11-22", time="15:00"),  # yesterday (GR-5)
+            ts(day_offset=0, time="08:00"),  # earlier today (GR-5)
+            ts(date="2028-01-01", time="09:00"),  # > 365 days (INV-7)
+            ts(offset_minutes=0),
+        ],
+    )
+    def test_gr5_inv7_out_of_range_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:114: AssertionError
+_______________ test_gr5_inv7_out_of_range_means_clarify[spec1] ________________
+
+spec = {'offset_minutes': None, 'day_offset': 0, 'weekday': None, 'date': None, ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(date="2026-11-22", time="15:00"),  # yesterday (GR-5)
+            ts(day_offset=0, time="08:00"),  # earlier today (GR-5)
+            ts(date="2028-01-01", time="09:00"),  # > 365 days (INV-7)
+            ts(offset_minutes=0),
+        ],
+    )
+    def test_gr5_inv7_out_of_range_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:114: AssertionError
+_______________ test_gr5_inv7_out_of_range_means_clarify[spec2] ________________
+
+spec = {'offset_minutes': None, 'day_offset': None, 'weekday': None, 'date': '2028-01-01', ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(date="2026-11-22", time="15:00"),  # yesterday (GR-5)
+            ts(day_offset=0, time="08:00"),  # earlier today (GR-5)
+            ts(date="2028-01-01", time="09:00"),  # > 365 days (INV-7)
+            ts(offset_minutes=0),
+        ],
+    )
+    def test_gr5_inv7_out_of_range_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:114: AssertionError
+_______________ test_gr5_inv7_out_of_range_means_clarify[spec3] ________________
+
+spec = {'offset_minutes': 0, 'day_offset': None, 'weekday': None, 'date': None, ...}
+
+    @pytest.mark.parametrize(
+        "spec",
+        [
+            ts(date="2026-11-22", time="15:00"),  # yesterday (GR-5)
+            ts(day_offset=0, time="08:00"),  # earlier today (GR-5)
+            ts(date="2028-01-01", time="09:00"),  # > 365 days (INV-7)
+            ts(offset_minutes=0),
+        ],
+    )
+    def test_gr5_inv7_out_of_range_means_clarify(spec):
+        out = create(spec)
+>       assert (out["intent"], out["missing"], out["due_at"]) == ("clarify", ["time"], None)
+E       AssertionError: assert ('clarify', [...'time'], None) == ('clarify', ['time'], None)
+E         
+E         At index 1 diff: ['task', 'time'] != ['time']
+E         Use -v to get more diff
+
+tests/test_create.py:114: AssertionError
+___________________________ test_us2_as1_reschedule ____________________________
+
+    def test_us2_as1_reschedule():
+        out = run(ext("reschedule", target_id="r2", time_spec=ts(weekday="friday", time="16:00")), R)
+>       assert (out["intent"], out["target_id"], out["due_at"]) == (
+            "reschedule",
+            "r2",
+            "2026-11-27T16:00:00+05:30",
+        )
+E       AssertionError: assert ('clarify', None, None) == ('reschedule'...:00:00+05:30')
+E         
+E         At index 0 diff: 'clarify' != 'reschedule'
+E         Use -v to get more diff
+
+tests/test_modify.py:12: AssertionError
+__________________ test_us2_as2_snooze_from_reminder_due_time __________________
+
+    def test_us2_as2_snooze_from_reminder_due_time():
+        out = run(ext("snooze", target_id="r1", snooze_minutes=15), R)
+>       assert (out["intent"], out["target_id"], out["snooze_minutes"], out["due_at"]) == (
+            "snooze",
+            "r1",
+            15,
+            "2026-11-23T09:45:00+05:30",
+        )
+E       AssertionError: assert ('clarify', None, None, None) == ('snooze', 'r...:45:00+05:30')
+E         
+E         At index 0 diff: 'clarify' != 'snooze'
+E         Use -v to get more diff
+
+tests/test_modify.py:22: AssertionError
+_____________________ test_snooze_ignores_model_time_spec ______________________
+
+    def test_snooze_ignores_model_time_spec():
+        out = run(ext("snooze", target_id="r3", snooze_minutes=30, time_spec=ts(time="23:00")), R)
+>       assert out["due_at"] == "2026-11-23T18:30:00+05:30"
+E       AssertionError: assert None == '2026-11-23T18:30:00+05:30'
+
+tests/test_modify.py:32: AssertionError
+______________ test_snooze_minutes_out_of_range_means_clarify[0] _______________
+
+minutes = 0
+
+    @pytest.mark.parametrize("minutes", [0, -5, 1441, None])
+    def test_snooze_minutes_out_of_range_means_clarify(minutes):
+        out = run(ext("snooze", target_id="r1", snooze_minutes=minutes), R)
+>       assert out["intent"] == "clarify" and out["missing"] == ["time"]
+E       AssertionError: assert ('clarify' == 'clarify'
+E         
+E           clarify and ['time', 'target'] == ['time']
+E         
+E         Left contains one more item: 'target'
+E         Use -v to get more diff)
+
+tests/test_modify.py:38: AssertionError
+______________ test_snooze_minutes_out_of_range_means_clarify[-5] ______________
+
+minutes = -5
+
+    @pytest.mark.parametrize("minutes", [0, -5, 1441, None])
+    def test_snooze_minutes_out_of_range_means_clarify(minutes):
+        out = run(ext("snooze", target_id="r1", snooze_minutes=minutes), R)
+>       assert out["intent"] == "clarify" and out["missing"] == ["time"]
+E       AssertionError: assert ('clarify' == 'clarify'
+E         
+E           clarify and ['time', 'target'] == ['time']
+E         
+E         Left contains one more item: 'target'
+E         Use -v to get more diff)
+
+tests/test_modify.py:38: AssertionError
+_____________ test_snooze_minutes_out_of_range_means_clarify[1441] _____________
+
+minutes = 1441
+
+    @pytest.mark.parametrize("minutes", [0, -5, 1441, None])
+    def test_snooze_minutes_out_of_range_means_clarify(minutes):
+        out = run(ext("snooze", target_id="r1", snooze_minutes=minutes), R)
+>       assert out["intent"] == "clarify" and out["missing"] == ["time"]
+E       AssertionError: assert ('clarify' == 'clarify'
+E         
+E           clarify and ['time', 'target'] == ['time']
+E         
+E         Left contains one more item: 'target'
+E         Use -v to get more diff)
+
+tests/test_modify.py:38: AssertionError
+_____________ test_snooze_minutes_out_of_range_means_clarify[None] _____________
+
+minutes = None
+
+    @pytest.mark.parametrize("minutes", [0, -5, 1441, None])
+    def test_snooze_minutes_out_of_range_means_clarify(minutes):
+        out = run(ext("snooze", target_id="r1", snooze_minutes=minutes), R)
+>       assert out["intent"] == "clarify" and out["missing"] == ["time"]
+E       AssertionError: assert ('clarify' == 'clarify'
+E         
+E           clarify and ['time', 'target'] == ['time']
+E         
+E         Left contains one more item: 'target'
+E         Use -v to get more diff)
+
+tests/test_modify.py:38: AssertionError
+_____________________________ test_us2_as3_cancel ______________________________
+
+    def test_us2_as3_cancel():
+        out = run(ext("cancel", target_id="r3"), R)
+>       assert (out["intent"], out["target_id"], out["due_at"]) == ("cancel", "r3", None)
+E       AssertionError: assert ('clarify', None, None) == ('cancel', 'r3', None)
+E         
+E         At index 0 diff: 'clarify' != 'cancel'
+E         Use -v to get more diff
+
+tests/test_modify.py:43: AssertionError
+_______ test_gr6_unknown_or_missing_target_means_clarify[r99-reschedule] _______
+
+intent = 'reschedule', target = 'r99'
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+_________ test_gr6_unknown_or_missing_target_means_clarify[r99-snooze] _________
+
+intent = 'snooze', target = 'r99'
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+______ test_gr6_unknown_or_missing_target_means_clarify[None-reschedule] _______
+
+intent = 'reschedule', target = None
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+________ test_gr6_unknown_or_missing_target_means_clarify[None-snooze] _________
+
+intent = 'snooze', target = None
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+________ test_gr6_unknown_or_missing_target_means_clarify[-reschedule] _________
+
+intent = 'reschedule', target = ''
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+__________ test_gr6_unknown_or_missing_target_means_clarify[-snooze] ___________
+
+intent = 'snooze', target = ''
+
+    @pytest.mark.parametrize("intent", ["reschedule", "snooze", "cancel"])
+    @pytest.mark.parametrize("target", ["r99", None, ""])
+    def test_gr6_unknown_or_missing_target_means_clarify(intent, target):
+        out = run(
+            ext(intent, target_id=target, snooze_minutes=10, time_spec=ts(day_offset=1, time="10:00")),
+            R,
+        )
+>       assert (out["intent"], out["missing"], out["target_id"]) == ("clarify", ["target"], None)
+E       AssertionError: assert ('clarify', [...arget'], None) == ('clarify', ['target'], None)
+E         
+E         At index 1 diff: ['time', 'target'] != ['target']
+E         Use -v to get more diff
+
+tests/test_modify.py:53: AssertionError
+__________________ test_reschedule_without_time_means_clarify __________________
+
+    def test_reschedule_without_time_means_clarify():
+        out = run(ext("reschedule", target_id="r2", time_spec=None), R)
+>       assert (out["intent"], out["missing"]) == ("clarify", ["time"])
+E       AssertionError: assert ('clarify', [...e', 'target']) == ('clarify', ['time'])
+E         
+E         At index 1 diff: ['time', 'target'] != ['time']
+E         Use -v to get more diff
+
+tests/test_modify.py:58: AssertionError
+___________________ test_reschedule_into_past_means_clarify ____________________
+
+    def test_reschedule_into_past_means_clarify():
+        out = run(ext("reschedule", target_id="r2", time_spec=ts(day_offset=0, time="07:00")), R)
+>       assert (out["intent"], out["missing"]) == ("clarify", ["time"])
+E       AssertionError: assert ('clarify', [...e', 'target']) == ('clarify', ['time'])
+E         
+E         At index 1 diff: ['time', 'target'] != ['time']
+E         Use -v to get more diff
+
+tests/test_modify.py:63: AssertionError
+________________________ test_gr1_500_chars_is_allowed _________________________
+
+    def test_gr1_500_chars_is_allowed():
+        fake = FakeExtractor(ext(task="read", time_spec=ts(offset_minutes=5), recurrence="none"))
+        out = handle(req("y" * 500), extractor=fake)
+        assert fake.calls == 1
+>       assert out["intent"] == "create"
+E       AssertionError: assert 'clarify' == 'create'
+E         
+E         - create
+E         + clarify
+
+tests/test_request.py:49: AssertionError
+_________________________ test_reminders_are_accepted __________________________
+
+    def test_reminders_are_accepted():
+        fake = FakeExtractor(ext("cancel", target_id="r1"))
+        out = handle(req(reminders=REMINDERS), extractor=fake)
+>       assert out["target_id"] == "r1"
+E       AssertionError: assert None == 'r1'
+
+tests/test_request.py:55: AssertionError
+================================ tests coverage ================================
+_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+
+Name                          Stmts   Miss  Cover   Missing
+-----------------------------------------------------------
+src/remindme/__init__.py          1      0   100%
+src/remindme/__main__.py          2      2     0%   3-5
+src/remindme/agent.py            28      5    82%   25-26, 42-44, 46
+src/remindme/cli.py              38      0   100%
+src/remindme/errors.py            2      0   100%
+src/remindme/evidence.py        170     77    55%   117-118, 122-132, 137-143, 148-151, 155-161, 165-172, 178-180, 183-186, 188-189, 192-193, 204-208, 210-211, 217-227, 240-242, 244-245, 247, 253-257
+src/remindme/grounding.py       153     29    81%   100, 103-105, 112, 122, 135-137, 143-144, 153, 156, 159-161, 183, 186, 189, 204-207, 213, 232, 235, 237, 239, 253
+src/remindme/llm.py             143     10    93%   46-47, 157-162, 173, 199
+src/remindme/postprocess.py     180     55    69%   59-61, 101, 109, 113, 146, 149, 164, 166, 172-173, 185, 188-189, 201-204, 211-214, 217, 223, 226, 229-230, 237-239, 243, 245-251, 256-264, 268-273, 283
+src/remindme/request.py          80      7    91%   40, 46, 52, 75, 88, 94, 98
+src/remindme/response.py        129     20    84%   61, 81, 125, 128, 133, 138, 146, 153, 158, 160, 163, 170, 179, 181, 192, 194, 204, 206-208
+-----------------------------------------------------------
+TOTAL                           926    205    78%
+FAIL Required test coverage of 85% not reached. Total coverage: 77.86%
+=========================== short test summary info ============================
+FAILED tests/test_create.py::test_us1_as1_tomorrow_at_6pm - AssertionError: a...
+FAILED tests/test_create.py::test_r1_offset_minutes - AssertionError: assert ...
+FAILED tests/test_create.py::test_r1_offset_keeps_seconds_of_now - AssertionE...
+FAILED tests/test_create.py::test_r2_weekday_strictly_after_today[friday-2026-11-27]
+FAILED tests/test_create.py::test_r2_weekday_strictly_after_today[tuesday-2026-11-24]
+FAILED tests/test_create.py::test_r2_weekday_strictly_after_today[monday-2026-11-30]
+FAILED tests/test_create.py::test_r2_explicit_date - AssertionError: assert N...
+FAILED tests/test_create.py::test_fr007_time_without_date_next_occurrence[08:00-2026-11-24T08:00:00+05:30]
+FAILED tests/test_create.py::test_fr007_time_without_date_next_occurrence[10:00-2026-11-23T10:00:00+05:30]
+FAILED tests/test_create.py::test_midnight_is_next_day - AssertionError: asse...
+FAILED tests/test_create.py::test_inv8_dst_offset - AssertionError: assert No...
+FAILED tests/test_create.py::test_fr008_weekdays_first_occurrence - Assertion...
+FAILED tests/test_create.py::test_r7_weekdays_rolls_weekend_to_monday - Asser...
+FAILED tests/test_create.py::test_fr008_recurrence_values_pass_through[daily]
+FAILED tests/test_create.py::test_fr008_recurrence_values_pass_through[weekly]
+FAILED tests/test_create.py::test_fr008_recurrence_values_pass_through[monthly]
+FAILED tests/test_create.py::test_r11_long_task_truncated_to_120 - AssertionE...
+FAILED tests/test_create.py::test_gr4_no_time_means_clarify[spec0] - Assertio...
+FAILED tests/test_create.py::test_gr4_no_time_means_clarify[spec1] - Assertio...
+FAILED tests/test_create.py::test_gr4_no_time_means_clarify[None] - Assertion...
+FAILED tests/test_create.py::test_gr4_no_time_means_clarify[spec3] - Assertio...
+FAILED tests/test_create.py::test_gr5_inv7_out_of_range_means_clarify[spec0]
+FAILED tests/test_create.py::test_gr5_inv7_out_of_range_means_clarify[spec1]
+FAILED tests/test_create.py::test_gr5_inv7_out_of_range_means_clarify[spec2]
+FAILED tests/test_create.py::test_gr5_inv7_out_of_range_means_clarify[spec3]
+FAILED tests/test_modify.py::test_us2_as1_reschedule - AssertionError: assert...
+FAILED tests/test_modify.py::test_us2_as2_snooze_from_reminder_due_time - Ass...
+FAILED tests/test_modify.py::test_snooze_ignores_model_time_spec - AssertionE...
+FAILED tests/test_modify.py::test_snooze_minutes_out_of_range_means_clarify[0]
+FAILED tests/test_modify.py::test_snooze_minutes_out_of_range_means_clarify[-5]
+FAILED tests/test_modify.py::test_snooze_minutes_out_of_range_means_clarify[1441]
+FAILED tests/test_modify.py::test_snooze_minutes_out_of_range_means_clarify[None]
+FAILED tests/test_modify.py::test_us2_as3_cancel - AssertionError: assert ('c...
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[r99-reschedule]
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[r99-snooze]
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[None-reschedule]
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[None-snooze]
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[-reschedule]
+FAILED tests/test_modify.py::test_gr6_unknown_or_missing_target_means_clarify[-snooze]
+FAILED tests/test_modify.py::test_reschedule_without_time_means_clarify - Ass...
+FAILED tests/test_modify.py::test_reschedule_into_past_means_clarify - Assert...
+FAILED tests/test_request.py::test_gr1_500_chars_is_allowed - AssertionError:...
+FAILED tests/test_request.py::test_reminders_are_accepted - AssertionError: a...
+43 failed, 61 passed in 0.49s
