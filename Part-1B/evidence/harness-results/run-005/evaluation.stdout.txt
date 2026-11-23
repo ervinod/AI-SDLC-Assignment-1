@@ -1,0 +1,79 @@
+  C01 t1: ok 2.496s
+  C01 t2: ok 2.126s
+  C01 t3: ok 2.511s
+  C02 t1: ok 2.609s
+  C02 t2: ok 2.222s
+  C02 t3: ok 2.157s
+  C03 t1: ok 2.214s
+  C03 t2: ok 2.058s
+  C03 t3: ok 2.033s
+  C04 t1: ok 2.189s
+  C04 t2: ok 2.141s
+  C04 t3: ok 2.159s
+  C05 t1: ok 2.248s
+  C05 t2: ok 2.205s
+  C05 t3: ok 2.064s
+  C06 t1: ok 2.435s
+  C06 t2: ok 2.306s
+  C06 t3: ok 2.178s
+  C07 t1: ok 2.475s
+  C07 t2: ok 2.101s
+  C07 t3: ok 2.296s
+  C08 t1: ok 2.514s
+  C08 t2: ok 2.361s
+  C08 t3: ok 2.119s
+  C09 t1: ok 2.568s
+  C09 t2: ok 2.114s
+  C09 t3: ok 2.148s
+  C10 t1: ok 2.166s
+  C10 t2: ok 2.105s
+  C10 t3: ok 2.124s
+  C11 t1: ok 1.394s
+  C11 t2: ok 1.34s
+  C11 t3: ok 1.355s
+  C12 t1: ok 2.538s
+  C12 t2: ok 2.018s
+  C12 t3: ok 2.023s
+  C13 t1: ok 2.45s
+  C13 t2: ok 2.345s
+  C13 t3: ok 2.327s
+  C14 t1: ok 2.414s
+  C14 t2: ok 2.141s
+  C14 t3: ok 2.065s
+  C15 t1: ok 2.456s
+  C15 t2: ok 2.272s
+  C15 t3: ok 2.329s
+  C16 t1: ok 2.535s
+  C16 t2: ok 2.537s
+  C16 t3: ok 2.259s
+  C17 t1: ok 2.485s
+  C17 t2: ok 2.099s
+  C17 t3: ok 2.161s
+  C18 t1: ok 0.0s
+  C18 t2: ok 0.0s
+  C18 t3: ok 0.0s
+  C19 t1: ok 0.0s
+  C19 t2: ok 0.0s
+  C19 t3: ok 0.0s
+  C20 t1: ok 1.655s
+  C20 t2: ok 1.633s
+  C20 t3: ok 1.676s
+  C21 t1: ok 1.889s
+  C21 t2: ok 1.811s
+  C21 t3: ok 1.783s
+  C22 t1: ok 2.126s
+  C22 t2: ok 2.094s
+  C22 t3: ok 2.001s
+  C23 t1: ok 2.101s
+  C23 t2: ok 2.003s
+  C23 t3: ok 1.98s
+  C24 t1: ok 1.831s
+  C24 t2: ok 1.903s
+  C24 t3: ok 1.438s
+  THR-1 schema validity = 100%: 1.0 PASS
+  THR-2 universal invariants = 100%: 1.0 PASS
+  THR-3 guardrail cases = 100%: 0.8333 FAIL
+  THR-4 case pass rate >= 85%: 0.5 FAIL
+  THR-5 mean semantic >= 0.85: 0.669 FAIL
+  THR-6 service errors <= 10%: 0.0 PASS
+== evaluation: FAIL  (/Users/apple/Documents/Assignment-1/Part-1B/evidence/eval-runs/run-005)
