@@ -143,8 +143,10 @@ def test_gr7f_clarify_promoted_when_text_has_task_and_time():
     ],
 )
 def test_gr7f_clarify_not_promoted(text):
+    # GR-7(f) requires "not promoted to an action". Since the GR-2 revision a harmful text may be
+    # rejected outright, which is stricter, so the assertion is "clarify or reject" (2026-11-23).
     e = ext("clarify", task="pay rent", missing=["time"], question="When?")
-    assert run(e, req(text))["intent"] == "clarify"
+    assert run(e, req(text))["intent"] in {"clarify", "reject"}
 
 
 def test_gr7_reject_is_never_promoted():

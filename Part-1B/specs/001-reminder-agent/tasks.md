@@ -91,6 +91,9 @@ unchanged.
 - [x] T034 [P] Write offline tests for GR-7 (a)–(f) and evidence parsing in `tests/test_grounding.py`
 - [x] T035 [P] Add a held-out evaluation set `evals/holdout.json` (written after the repair, never shown to the coding agent) reported separately to estimate over-fitting
 
+- [x] T036 Deterministic GR-2 harm guardrail `src/remindme/safety.py` (coding agent; repair from run-008 C21)
+- [x] T037 [P] GR-2 offline tests (harmful vs benign phrasings) in `tests/test_safety.py`
+
 ## Dependencies
 
 Setup (T001–T006) → Foundational (T007–T010) → US1 (T011–T015) → US2, US3, US4 (parallel) → T022–T025.
