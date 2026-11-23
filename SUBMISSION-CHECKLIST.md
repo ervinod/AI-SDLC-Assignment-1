@@ -37,7 +37,7 @@
 - [ ] Final human ACCEPT/REJECT and limitations recorded (**you**)
 - [x] No API keys, credentials or `.env` files committed (`.env` is gitignored)
 - [x] README has instructions for running each harness
-- [ ] Part 1B live evaluation run (step A1)
+- [x] Part 1B live evaluation run (local llama3.2:3b) — official PASS, held-out 11/12
 
 ## C. Demo video script (about 5 minutes)
 
