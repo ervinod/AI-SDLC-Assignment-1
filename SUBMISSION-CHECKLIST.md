@@ -34,7 +34,7 @@
 - [x] Part 1B has 24 evaluation cases and one non-deterministic evaluation pipeline
 - [x] Harness results and failure/repair evidence are kept under `evidence/`
 - [x] `harness-log.md` is present for both parts
-- [ ] Final human ACCEPT/REJECT and limitations recorded (**you**)
+- [x] Final human ACCEPT/REJECT and limitations recorded
 - [x] No API keys, credentials or `.env` files committed (`.env` is gitignored)
 - [x] README has instructions for running each harness
 - [x] Part 1B live evaluation run (local llama3.2:3b) — official PASS, held-out 11/12

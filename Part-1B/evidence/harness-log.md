@@ -217,8 +217,8 @@ coverage by keyword and pattern rules is incomplete.
 
 > **To be completed by the student. Neither the harness nor the AI agent fills this in.**
 
-- Decision (ACCEPT / REJECT):
-- Reviewed by / date:
-- Justification:
-- Known limitations:
-- Residual risks:
+- Decision (ACCEPT / REJECT): REJECT (not ready for real users)
+- Reviewed by / date: Vinod Rajendra Patil, 2026-11-23
+- Justification: I wouldn’t trust it with real users yet. It passed all 24 planned cases, but one of 12 new cases showed it could still accept a harmful request.
+- Known limitations: It may misunderstand wording it hasn’t seen before, especially when a reminder is unclear or the time is written in an unusual way.
+- Residual risks: It could get a time wrong, change the wrong reminder, or miss a harmful request. I’d first improve the safety checks and test more examples with new and tricky wording.
